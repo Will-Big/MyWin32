@@ -1,6 +1,5 @@
 ﻿// AssignProject.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
-
 #include "framework.h"
 #include "AssignProject.h"
 
@@ -111,6 +110,64 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
+#define GRID_X 10
+#define GRID_Y 10
+
+bool myGrid[GRID_X][GRID_Y];
+
+void DrawGrid(HWND hWnd, HDC hdc)
+{
+    RECT rect;
+    GetClientRect(hWnd, &rect);
+    int xBlock = (rect.right - rect.left) / GRID_X;
+    int yBlock = (rect.bottom - rect.top) / GRID_Y;
+
+    HPEN hpen = (HPEN)GetStockObject(BLACK_PEN);
+    HPEN hpenOld = (HPEN)SelectObject(hdc, hpen);
+
+    HBRUSH hbrush = (HBRUSH)CreateSolidBrush(RGB(0xff, 0xda, 0xb9));
+    HBRUSH hbrushOld = (HBRUSH)SelectObject(hdc, hbrush);
+
+    for (int x = rect.left; x < rect.right; x += xBlock)
+    {
+        for (int y = rect.top; y < rect.bottom; y += yBlock)
+        {
+            if (myGrid[y / yBlock][x / xBlock])
+            {
+                (HBRUSH)SelectObject(hdc, hbrush);
+            }
+            else
+            {
+                (HBRUSH)SelectObject(hdc, hbrushOld);
+            }
+            Rectangle(hdc, x, y, x + xBlock, y + yBlock);
+        }
+    }
+}
+
+
+
+void PointGrid(HWND hWnd, LPARAM lParam)
+{
+    RECT rect;
+    static POINT prevPoint = {-1, -1};
+    GetClientRect(hWnd, &rect);
+    int xBlock = (rect.right - rect.left) / GRID_X;
+    int yBlock = (rect.bottom - rect.top) / GRID_Y;
+
+    if (prevPoint.x >= 0 && prevPoint.y >= 0)
+    {
+        myGrid[prevPoint.y][prevPoint.x] = false;
+    }
+
+    prevPoint.x = LOWORD(lParam) / xBlock;
+    if (prevPoint.x > GRID_X - 1) prevPoint.x = GRID_X - 1;
+    prevPoint.y = HIWORD(lParam) / yBlock;
+    if (prevPoint.y > GRID_Y - 1) prevPoint.y = GRID_Y - 1;
+
+    myGrid[prevPoint.y][prevPoint.x] = true;
+}
+
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -146,13 +203,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+            DrawGrid(hWnd, hdc);
             EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
+    case WM_LBUTTONDOWN:
+        PointGrid(hWnd, lParam);
+        InvalidateRect(hWnd, nullptr, false);
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
