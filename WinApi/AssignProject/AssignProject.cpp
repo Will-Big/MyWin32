@@ -113,7 +113,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 #define GRID_X 10
 #define GRID_Y 10
 
-bool myGrid[GRID_X][GRID_Y];
+bool myGrid[GRID_Y][GRID_X];
 
 void DrawGrid(HWND hWnd, HDC hdc)
 {
