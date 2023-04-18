@@ -115,6 +115,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 #define GRID_Y 10
 
 POINT prevPoint = { -1, -1 };
+HRGN lastRegion;
 
 // 창 크기 비례 좌표 조정
 void ChangePoint(LPARAM lParam)
@@ -134,8 +135,14 @@ void ChangePoint(LPARAM lParam)
 	int widthDiff = currWidth - prevWidth;
 	int heightDiff = currHeight - prevHeight;
 
-	prevPoint.x += widthDiff;
-	prevPoint.y += heightDiff;
+	// 색칠된 영역 안을 유지하는지 검사
+	if (PtInRegion(lastRegion, 
+		prevPoint.x + widthDiff*2, 
+		prevPoint.y + heightDiff*2))
+	{
+		prevPoint.x += widthDiff;
+		prevPoint.y += heightDiff;
+	}
 }
 
 // 그리드 출력
@@ -145,6 +152,8 @@ void DrawGrid(HWND hWnd, HDC hdc)
 	GetClientRect(hWnd, &rect);
 	int xBlock = (rect.right - rect.left) / GRID_X;
 	int yBlock = (rect.bottom - rect.top) / GRID_Y;
+
+	if (xBlock <= 0 || yBlock <= 0) return;
 
 	HPEN hPen = (HPEN)GetStockObject(BLACK_PEN);
 	HPEN hPenOld = (HPEN)SelectObject(hdc, hPen);
@@ -160,6 +169,18 @@ void DrawGrid(HWND hWnd, HDC hdc)
 
 			if (PtInRegion(hrgn, prevPoint.x, prevPoint.y))
 			{
+				// 이전 영역 삭제
+				if (lastRegion != NULL)
+				{
+					HRGN tempHrgn = NULL;
+					CombineRgn(tempHrgn, lastRegion, NULL, RGN_COPY);
+					DeleteObject(tempHrgn);
+				}
+				
+				RECT rc;
+				GetRgnBox(hrgn, &rc);
+				lastRegion = CreateRectRgnIndirect(&rc);
+
 				SelectObject(hdc, hBrush);
 			}
 			else
