@@ -1,12 +1,14 @@
 ﻿// StudyProject.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
-
+#include "pch.h"
+#include "CCore.h"
 #include "framework.h"
 #include "StudyProject.h"
 
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
+HWND g_hWnd;
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
@@ -38,17 +40,46 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return FALSE;
 	}
 
+	// Core 초기화
+	if (FAILED(CCore::GetInst()->init(g_hWnd, POINT{ 1280, 768 })))
+	{
+		MessageBox(nullptr, L"Core 객체 초기화 실패", L"ERROR", MB_OK);
+
+		return FALSE;
+	}
+
+
+
+
+
+
+
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_STUDYPROJECT));
 
 	MSG msg;
 
-	// 기본 메시지 루프입니다:
-	while (GetMessage(&msg, nullptr, 0, 0))
+	// PeekMessage
+	// 메세지 유무와 관계없이 반환
+	// 있으면 true 없으면 false
+
+
+	while (true)
 	{
-		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
+			if (msg.message == WM_QUIT)
+				break;
+
+			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+		else
+		{
+			// 메세지가 없는 동안 호출
+			CCore::GetInst()->progress();
 		}
 	}
 
@@ -65,9 +96,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
 	WNDCLASSEXW wcex;
-
 	wcex.cbSize = sizeof(WNDCLASSEX);
-
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc = WndProc;
 	wcex.cbClsExtra = 0;
@@ -76,8 +105,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_STUDYPROJECT));
 	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	//wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_STUDYPROJECT);
-	wcex.lpszMenuName = nullptr;
+	wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_STUDYPROJECT);
 	wcex.lpszClassName = szWindowClass;
 	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -98,117 +126,20 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+	g_hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-	if (!hWnd)
+	if (!g_hWnd)
 	{
 		return FALSE;
 	}
 
-	ShowWindow(hWnd, nCmdShow);
-	UpdateWindow(hWnd);
+	ShowWindow(g_hWnd, nCmdShow);
+	UpdateWindow(g_hWnd);
 
 	return TRUE;
 }
 
-#define GRID_X 10
-#define GRID_Y 10
-
-POINT prevPoint = { -1, -1 };
-HRGN lastRegion;
-
-// 창 크기 비례 좌표 조정
-void ChangePoint(LPARAM lParam)
-{
-	static int currWidth, currHeight;
-	int prevWidth, prevHeight;
-
-	prevWidth = currWidth;
-	prevHeight = currHeight;
-
-	currWidth = LOWORD(lParam);
-	currHeight = HIWORD(lParam);
-
-	if (currHeight - prevHeight > 100) return;
-	if (currWidth - prevWidth > 100) return;
-
-	int widthDiff = currWidth - prevWidth;
-	int heightDiff = currHeight - prevHeight;
-
-	// 색칠된 영역 안을 유지하는지 검사
-	if (PtInRegion(lastRegion, 
-		prevPoint.x + widthDiff*2, 
-		prevPoint.y + heightDiff*2))
-	{
-		prevPoint.x += widthDiff;
-		prevPoint.y += heightDiff;
-	}
-}
-
-// 그리드 출력
-void DrawGrid(HWND hWnd, HDC hdc)
-{
-	RECT rect;
-	GetClientRect(hWnd, &rect);
-	int xBlock = (rect.right - rect.left) / GRID_X;
-	int yBlock = (rect.bottom - rect.top) / GRID_Y;
-
-	if (xBlock <= 0 || yBlock <= 0) return;
-
-	HPEN hPen = (HPEN)GetStockObject(BLACK_PEN);
-	HPEN hPenOld = (HPEN)SelectObject(hdc, hPen);
-
-	HBRUSH hBrush = (HBRUSH)CreateSolidBrush(RGB(0xff, 0xda, 0xb9));
-	HBRUSH hBrushOld = (HBRUSH)SelectObject(hdc, hBrush);
-
-	for (int x = rect.left; x < rect.right; x += xBlock)
-	{
-		for (int y = rect.top; y < rect.bottom; y += yBlock)
-		{
-			HRGN hrgn = CreateRectRgn(x, y, x + xBlock, y + yBlock);
-
-			if (PtInRegion(hrgn, prevPoint.x, prevPoint.y))
-			{
-				// 이전 영역 삭제
-				if (lastRegion != NULL)
-				{
-					HRGN tempHrgn = NULL;
-					CombineRgn(tempHrgn, lastRegion, NULL, RGN_COPY);
-					DeleteObject(tempHrgn);
-				}
-				
-				RECT rc;
-				GetRgnBox(hrgn, &rc);
-				lastRegion = CreateRectRgnIndirect(&rc);
-
-				SelectObject(hdc, hBrush);
-			}
-			else
-			{
-				SelectObject(hdc, hBrushOld);
-			}
-
-			Rectangle(hdc, x, y, x + xBlock, y + yBlock);
-			DeleteObject(hrgn);
-		}
-	}
-
-	DeleteObject(hPen);
-	DeleteObject(hBrush);
-}
-
-// 영역 클릭
-void PointGrid(HWND hWnd, LPARAM lParam)
-{
-	RECT rect;
-	GetClientRect(hWnd, &rect);
-	int xBlock = (rect.right - rect.left) / GRID_X;
-	int yBlock = (rect.bottom - rect.top) / GRID_Y;
-
-	prevPoint.x = LOWORD(lParam);
-	prevPoint.y = HIWORD(lParam);
-}
 //
 //  함수: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -240,23 +171,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	break;
-	case WM_SIZE:
-	{
-		ChangePoint(lParam);
-	}
-	break;
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
-		DrawGrid(hWnd, hdc);
 		EndPaint(hWnd, &ps);
-	}
-	break;
-	case WM_LBUTTONDOWN:
-	{
-		PointGrid(hWnd, lParam);
-		InvalidateRect(hWnd, nullptr, false);
 	}
 	break;
 	case WM_DESTROY:
