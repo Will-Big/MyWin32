@@ -14,6 +14,6 @@ public:
 
 public:
 	CObject();
-	~CObject();
+	virtual ~CObject();
 };
 
