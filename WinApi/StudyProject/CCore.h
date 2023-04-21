@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 class CCore
 {
 	SINGLE(CCore)
@@ -13,6 +15,6 @@ public:
 	void progress();
 
 private:
-	CCore();
-	~CCore();
+	void update();
+	void render();
 };
