@@ -42,6 +42,7 @@ void CCore::progress()
 {
 	//Manager update
 	CTimeMgr::GetInst()->update();
+	CKeyMgr::GetInst()->update();
 
 	update();
 
@@ -51,14 +52,14 @@ void CCore::progress()
 void CCore::update()
 {
 	Vec2 vPos = g_obj.GetPos();
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+	if (CKeyMgr::GetInst()->GetKeyState(KEY::LEFT) == KEY_STATE::TAP)
 	{
-		vPos.x -= 500.f * fDT;
+		vPos.x -= 500.f;// * fDT;
 	}
 	
-	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	if (CKeyMgr::GetInst()->GetKeyState(KEY::RIGHT) == KEY_STATE::TAP)
 	{
-		vPos.x += 500.f * fDT;
+		vPos.x += 500.f;// * fDT;
 	}
 	
 	g_obj.SetPos(vPos);
