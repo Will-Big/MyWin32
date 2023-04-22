@@ -33,9 +33,6 @@ int CCore::init(HWND _hWnd, POINT _ptResolution)
 	CKeyMgr::GetInst()->init();
 	CSceneMgr::GetInst()->init();
 
-	Vec2 vPos = Vec2(float(m_ptResolution.x / 2), float(m_ptResolution.y / 2));
-	g_obj.SetPos(vPos);
-	g_obj.SetScale(Vec2(100, 100));
 
 	return S_OK;
 }
@@ -45,11 +42,18 @@ void CCore::progress()
 	//Manager update
 	CTimeMgr::GetInst()->update();
 	CKeyMgr::GetInst()->update();
+	CSceneMgr::GetInst()->update();
 	
+	// ========
+	// Rendering
+	// ========
+	// 화면 Clear
+	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
 
-	update();
+	CSceneMgr::GetInst()->render(m_memDC);
 
-	render();
+	// 프레임 드랍을 많이 일으키는 작업
+	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
 }
 
 void CCore::update()
@@ -70,8 +74,7 @@ void CCore::update()
 
 void CCore::render()
 {
-	// 화면 Clear
-	Rectangle(m_memDC, -1, -1, m_ptResolution.x + 1, m_ptResolution.y + 1);
+
 
 	// 그리기
 	Vec2 vPos = g_obj.GetPos();
@@ -83,8 +86,7 @@ void CCore::render()
 		, int(vPos.x + vScale.x / 2.f)
 		, int(vPos.y + vScale.y / 2.f));
 
-	// 프레임 드랍을 많이 일으키는 작업
-	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
+
 }
 
 CCore::CCore()
