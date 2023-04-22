@@ -38,6 +38,12 @@
     <Filter Include="Engine\05.Scene\Scene_Start">
       <UniqueIdentifier>{6fd85246-263d-476c-baf2-2f8a6ca3c58e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\Player">
+      <UniqueIdentifier>{843afcbc-8697-4863-8756-1afa205a6185}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Monster">
+      <UniqueIdentifier>{ad1db156-38de-40d5-9872-501ce597bb61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -82,6 +88,12 @@
     <ClInclude Include="CScene_Start.h">
       <Filter>Engine\05.Scene\Scene_Start</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>Engine\04.Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Engine\04.Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -105,6 +117,12 @@
     </ClCompile>
     <ClCompile Include="CScene_Start.cpp">
       <Filter>Engine\05.Scene\Scene_Start</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>Engine\04.Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Engine\04.Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

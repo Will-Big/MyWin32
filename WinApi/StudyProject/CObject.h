@@ -1,4 +1,6 @@
 #pragma once
+// 오브젝트는 직접 생성할 이유가 없는 클래스이기 때문에
+// 순수 가상함수를 만들어서 추상 클래스화 해준다.
 class CObject
 {
 private:
@@ -13,8 +15,8 @@ public:
 	Vec2 GetScale() { return m_vScale; }
 
 public:
-	void update();
-	void render(HDC _dc);
+	virtual void update();
+	virtual void render(HDC _dc);
 
 public:
 	CObject();
