@@ -29,9 +29,9 @@ int g_arrVK[(int)KEY::LAST] =
 	'V', 
 	'B',
 	VK_MENU, 
+	VK_LCONTROL,
 	VK_LSHIFT, 
 	VK_SPACE,
-	VK_LCONTROL, 
 	VK_RETURN, 
 	VK_ESCAPE,
 	// LAST

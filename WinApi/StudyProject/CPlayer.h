@@ -6,5 +6,8 @@ class CPlayer :
 public:
     void update() override;
     //void render(HDC _dc) override;
+
+private:
+    void CreateMissile();
 };
 
