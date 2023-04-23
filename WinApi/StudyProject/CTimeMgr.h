@@ -21,5 +21,6 @@ public:
 public:
 	double GetDT() { return m_dDT; }
 	float GetfDT() { return (float)m_dDT; }
+	double GetdAcc() { return m_dAcc; } // 1초 근방을 얻기 위한 함수
 };
 
