@@ -33,9 +33,8 @@ void CMonster::update()
 	{
 		CMissile* pMissile = new CMissile;
 		pMissile->SetPos(vMisslePos);
-		pMissile->SetDir(false);
+		//pMissile->SetDir(false);
 		pMissile->SetScale(Vec2(GetScale().x / 2.f, GetScale().y / 2.f));
-		pMissile->SetXstart(vMisslePos.x);
 		CScene* pCurScene = CSceneMgr::GetInst()->GetCurScene();
 		pCurScene->AddObject(pMissile, GROUP_TYPE::DEFAULT);
 	}
