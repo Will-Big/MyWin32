@@ -5,9 +5,15 @@ class CMissile :
 {
 private:
 	float		m_fTheta;		// 위 아래 방향
+	Vec2		m_vDir;
 
 public:
-	float SetDir(float _fTheta) { return m_fTheta; }
+	void SetDir(float _fTheta) { m_fTheta = _fTheta; }
+	void SetDir(Vec2 _vDir) 
+	{ 
+		m_vDir = _vDir; 
+		m_vDir.Normalize();
+	}
 
 public:
 	void update() override;
