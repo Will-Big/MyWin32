@@ -8,7 +8,6 @@
 
 void CMonster::update()
 {
-	static double dCurSec = 0;
 	Vec2 vCurPos = GetPos();
 	
 	// 진행 방향으로 시간당 m_fSpeed 만큼 이동
@@ -22,8 +21,9 @@ void CMonster::update()
 		vCurPos.x += fDist * m_iDir;
 	}
 
-	// 왜 한놈만 쏠까?
 	double dPrevSec = dCurSec;
+	// 몬스터마다 받아오는 시간이 다르다면 ... 누군가는 안쏴야하는거 아닌가?
+	// -> CTimeMgr 가 같은 시간을 보장한다!
 	dCurSec = CTimeMgr::GetInst()->GetdAcc();
 
 	Vec2 vMisslePos = vCurPos;

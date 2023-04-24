@@ -8,6 +8,7 @@ private:
     float       m_fSpeed;
     float       m_fMaxDistance;
     int         m_iDir; // 1, -1
+    double      dCurSec = 0;
 
 public:
     float GetSpeed() { return m_fSpeed; }
