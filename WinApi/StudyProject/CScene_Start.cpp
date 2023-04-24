@@ -2,13 +2,25 @@
 #include "CScene_Start.h"
 
 #include "CObject.h"
+
 #include "CPlayer.h"
 #include "CMonster.h"
 
 #include "CCore.h"
 
+#include "CPathMgr.h"
+#include "CTexture.h"
+
 void CScene_Start::Enter()
 {
+	// Texture 로딩하기
+	CTexture* pTex = new CTexture;
+	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+	strFilePath += L"texture\\ez.bmp";
+	pTex->Load(strFilePath);
+
+	delete pTex;
+
 	// Object 추가
 	CObject* pObj = new CPlayer;
 	pObj->SetPos(Vec2(640.f, 384.f));

@@ -5,6 +5,7 @@
 #include "CKeyMgr.h"
 #include "CObject.h"
 #include "CSceneMgr.h"
+#include "CPathMgr.h"
 
 CObject g_obj;
 
@@ -31,7 +32,9 @@ int CCore::init(HWND _hWnd, POINT _ptResolution)
 	// Manager 초기화
 	CTimeMgr::GetInst()->init();
 	CKeyMgr::GetInst()->init();
+	CPathMgr::GetInst()->init();
 	CSceneMgr::GetInst()->init();
+	
 
 
 	return S_OK;
@@ -54,6 +57,8 @@ void CCore::progress()
 
 	// 프레임 드랍을 많이 일으키는 작업
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
+
+	//CTimeMgr::GetInst()->render();
 }
 
 void CCore::update()

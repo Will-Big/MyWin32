@@ -8,6 +8,9 @@ private:
     HBITMAP m_hBit;
 
 public:
+    void Load(const wstring& _strFilePath);
+
+public:
     CTexture();
     ~CTexture();
 };
