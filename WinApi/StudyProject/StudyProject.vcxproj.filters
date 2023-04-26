@@ -32,9 +32,6 @@
     <Filter Include="Engine\05.Scene">
       <UniqueIdentifier>{bdb6345f-1054-442c-bd9c-22d0869e6556}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\03.Manager\ScneManager">
-      <UniqueIdentifier>{ee504173-7d95-4d19-ad5b-245f0213500f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\05.Scene\Scene_Start">
       <UniqueIdentifier>{6fd85246-263d-476c-baf2-2f8a6ca3c58e}</UniqueIdentifier>
     </Filter>
@@ -58,6 +55,12 @@
     </Filter>
     <Filter Include="Engine\03.Manager\PathMgr">
       <UniqueIdentifier>{088a51ef-a475-43a9-b356-fdbd8e2089f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\ResourceMgr">
+      <UniqueIdentifier>{9a195bad-84c5-47a7-8bb4-2cb2de6fae8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\SceneMgr">
+      <UniqueIdentifier>{ee504173-7d95-4d19-ad5b-245f0213500f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -98,7 +101,7 @@
       <Filter>Engine\05.Scene</Filter>
     </ClInclude>
     <ClInclude Include="CSceneMgr.h">
-      <Filter>Engine\03.Manager\ScneManager</Filter>
+      <Filter>Engine\03.Manager\SceneMgr</Filter>
     </ClInclude>
     <ClInclude Include="CScene_Start.h">
       <Filter>Engine\05.Scene\Scene_Start</Filter>
@@ -143,7 +146,7 @@
       <Filter>Engine\05.Scene</Filter>
     </ClCompile>
     <ClCompile Include="CSceneMgr.cpp">
-      <Filter>Engine\03.Manager\ScneManager</Filter>
+      <Filter>Engine\03.Manager\SceneMgr</Filter>
     </ClCompile>
     <ClCompile Include="CScene_Start.cpp">
       <Filter>Engine\05.Scene\Scene_Start</Filter>
