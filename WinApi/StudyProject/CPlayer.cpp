@@ -4,8 +4,29 @@
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
 #include "CMissile.h"
+
 #include "CScene.h"
 #include "CSceneMgr.h"
+
+#include "CTexture.h"
+#include "CPathMgr.h"
+
+CPlayer::CPlayer()
+	: m_pTex(nullptr)
+{
+	// Texture 로딩하기
+	m_pTex = new CTexture;
+	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+	strFilePath += L"texture\\Mario.bmp";
+	m_pTex->Load(strFilePath);
+}
+
+CPlayer::~CPlayer()
+{
+	if (m_pTex != nullptr)
+		delete m_pTex;
+}
+
 
 void CPlayer::update()
 {
@@ -43,19 +64,28 @@ void CPlayer::CreateMissile()
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(vMissilePos);
 	pMissile->SetScale(Vec2(25.f, 25.f));
-	pMissile->SetDir({ -1.f, -7.f });
+	pMissile->SetDir({ 0.f, -1.f });
 	CScene* pCurScene = CSceneMgr::GetInst()->GetCurScene();
 	pCurScene->AddObject(pMissile, GROUP_TYPE::DEFAULT);
 }
 
-//void CPlayer::render(HDC _dc)
-//{
-//	Vec2 vPos = GetPos();
-//	Vec2 vScale = GetScale();
-//
-//	Rectangle(_dc,
-//		int(vPos.x - vScale.x / 2.f),
-//		int(vPos.y - vScale.y / 2.f),
-//		int(vPos.x + vScale.x / 2.f),
-//		int(vPos.y + vScale.x / 2.f));
-//}
+
+void CPlayer::render(HDC _dc)
+{
+	// 23, 13:45 강사는 구석에 렌더하는 경우가 있어서 int로 받는다고 했는데..
+	// UINT 를 int로 캐스팅하면 정상적으로 되나?
+	// 굳이 int 로 받아야 하나?
+	int iWidth = (int)m_pTex->Width();
+	int iHeight = (int)m_pTex->Height();
+
+	Vec2 vPos = GetPos();
+
+	// 투명화
+	TransparentBlt(_dc
+		, vPos.x - (float)(iWidth / 2)
+		, vPos.y - (float)(iHeight / 2)
+		, iWidth, iHeight
+		, m_pTex->GetDC()
+		, 0, 0, iWidth, iHeight
+		, RGB(255, 0, 255));
+}
