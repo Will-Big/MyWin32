@@ -17,7 +17,7 @@ void CScene_Start::Enter()
 	CObject* pObj = new CPlayer;
 	pObj->SetPos(Vec2(640.f, 384.f));
 	pObj->SetScale(Vec2(100.f, 100.f));
-	AddObject(pObj, GROUP_TYPE::DEFAULT);
+ 	AddObject(pObj, GROUP_TYPE::DEFAULT);
 	
 	// Monster Object 추가
 	// 변수 선언과 동시에 대입을 하면? -> 복사 생성자가 호출됨
