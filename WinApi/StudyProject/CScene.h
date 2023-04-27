@@ -17,6 +17,7 @@ public:
 	const wstring& GetName() { return m_strName; }
 
 	void update();
+	void finalupdate();
 	void render(HDC _dc);
 
 	// 순수 가상함수(override 필수)

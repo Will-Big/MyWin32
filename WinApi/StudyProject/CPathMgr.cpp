@@ -16,10 +16,10 @@ void CPathMgr::init()
 {
 	GetCurrentDirectory(255, m_szContentPath);
 	
-	int iLen = wcslen(m_szContentPath);
+	size_t iLen = wcslen(m_szContentPath);
 	
 	// 상위 폴더로
-	for (int i = iLen - 1; i >= 0; --i)
+	for (size_t i = iLen - 1; i >= 0; --i)
 	{
 		if (m_szContentPath[i] == '\\')
 		{

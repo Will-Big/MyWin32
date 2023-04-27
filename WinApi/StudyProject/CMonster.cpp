@@ -9,6 +9,20 @@
 #include "CResMgr.h"
 #include "CTexture.h"
 
+CMonster::CMonster()
+	: m_vCenterPos(Vec2(0.f, 0.f))
+	, m_fSpeed(100.f)
+	, m_fMaxDistance(50.f)
+	, m_iDir(1)
+{
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"Monster", L"texture\\Goomba.bmp");
+	CreateCollider();
+}
+
+CMonster::~CMonster()
+{
+}
+
 void CMonster::update()
 {
 	Vec2 vCurPos = GetPos();
@@ -62,25 +76,14 @@ void CMonster::render(HDC _dc)
 	//	, 0, 0, iWidth, iHeight
 	//	, RGB(255, 0, 255));
 
-	StretchBlt(_dc
-		, vPos.x - (float)(vScale.x / 2)
-		, vPos.y - (float)(vScale.y / 2)
-		, vPos.x + (float)(vScale.x / 2)
-		, vPos.y + (float)(vScale.y / 2)
+	TransparentBlt(_dc
+		, (int)(vPos.x - (float)(vScale.x / 2)) // 0 ~ 50
+		, (int)(vPos.y - (float)(vScale.y / 2)) // 25 ~ 25
+		, (int)vScale.x // 50
+		, (int)vScale.y // 50
 		, m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
-		, SRCCOPY);
+		, RGB(255, 255, 255));
 }
 
-CMonster::CMonster()
-	: m_vCenterPos(Vec2(0.f, 0.f))
-	, m_fSpeed(100.f)
-	, m_fMaxDistance(50.f)
-	, m_iDir(1)
-{
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"Monster", L"texture\\Goomba.bmp");
-}
 
-CMonster::~CMonster()
-{
-}

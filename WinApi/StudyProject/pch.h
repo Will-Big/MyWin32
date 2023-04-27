@@ -12,6 +12,12 @@ using std::vector;
 using std::map;
 using std::make_pair;
 
+// 임의 작성 시작
+#include <gdiplus.h>
+#pragma comment(lib, "gdiplus")
+
+// 임의 작성 끝
+
 
 #include <string>
 using std::string;

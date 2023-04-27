@@ -12,11 +12,15 @@
 #include "CResMgr.h"
 #include "CTexture.h"
 
+#include "CCollider.h"
+
 CPlayer::CPlayer()
 	: m_pTex(nullptr)
 {
 	// Texture 로딩하기
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Mario.bmp");
+	CreateCollider();
+
 }
 
 CPlayer::~CPlayer()
@@ -76,12 +80,13 @@ void CPlayer::render(HDC _dc)
 	int iHeight = (int)m_pTex->Height();
 
 	Vec2 vPos = GetPos();
+	Vec2 vScale = GetScale();
 
 	// 투명화
 	TransparentBlt(_dc
-		, vPos.x - (float)(iWidth / 2)
-		, vPos.y - (float)(iHeight / 2)
-		, iWidth, iHeight
+		, (int)(vPos.x - (float)(vScale.x / 2))
+		, (int)(vPos.y - (float)(vScale.y / 2))
+		, vScale.x, vScale.y
 		, m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 0, 255));
