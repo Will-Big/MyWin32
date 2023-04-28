@@ -8,6 +8,6 @@ namespace time
 
 	const float GetFrameRate();
 
-	const ULONGLONG GetDeltaTime();
+	const float GetDeltaTime();
 
 }

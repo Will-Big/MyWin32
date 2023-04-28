@@ -29,12 +29,19 @@ namespace game
 			this->x += x;
 			this->y += y;
 		}
+
+		void MoveByDeltaTime(float x, float y)
+		{
+			this->x += x * time::GetDeltaTime();
+			this->y += y * time::GetDeltaTime();
+		}
 	};
 
 	Object player = 
 		{ global::GetWinApp().GetWidth() / 2 
 		, global::GetWinApp().GetHeight() / 2
-		, 10, 10, RGB(255, 255, 0) };
+		, 10, 0.1f, RGB(255, 255, 0) };
+	HBITMAP hTestBitmap = nullptr;
 
 	const int bludeCircleMax = 100;
 	int blueCircleCount = 0;
@@ -55,21 +62,41 @@ namespace game
 	void UpdatePlayer()
 	{
 		// 게임 로직은 여기에 추가
-		if (input::IsKeyDown('A'))
+		if (input::IsKey('A'))
 		{
 			player.Move(-player.speed, 0);
 		}
-		else if (input::IsKeyDown('D'))
+		else if (input::IsKey('D'))
 		{
 			player.Move(player.speed, 0);
 		}
-		if (input::IsKeyDown('W'))
+		if (input::IsKey('W'))
 		{
 			player.Move(0, -player.speed);
 		}
-		else if (input::IsKeyDown('S'))
+		else if (input::IsKey('S'))
 		{
 			player.Move(0, player.speed);
+		}
+	}
+
+	void UpdateBlueCircle()
+	{
+		const input::MouseState& mouse = input::GetMouseState();
+		const input::MouseState& prevmouse = input::GetPrevMouseState();
+
+		if (input::IsSame(mouse, prevmouse))
+		{
+			return;
+		}
+
+		if (blueCircleCount < bludeCircleMax && mouse.left)
+		{
+			blueCircles[blueCircleCount].SetPos(mouse.x, mouse.y);
+			blueCircles[blueCircleCount].color = RGB(0, 0, 255);
+			blueCircles[blueCircleCount].size = 10;
+			blueCircles[blueCircleCount].speed = 0;
+			blueCircleCount++;
 		}
 	}
 
@@ -79,13 +106,13 @@ namespace game
 
 		input::UpdateMouse();
 
-		time::UpdateTime();
-
 		UpdatePlayer();
-		//UpdateBlueCircle();
+		UpdateBlueCircle();
 
 		input::ResetInput();
 	}
+
+
 
 	void GameManager::FixeUpdate()
 	{
@@ -119,8 +146,9 @@ namespace game
 
 	void GameManager::Run()
 	{
-		// 게임 루프를 만듭시다.
 		MSG msg;
+		// 게임에 필요한 리소르를 미리 로드!
+		Load();
 
 		while (true)
 		{
@@ -136,7 +164,6 @@ namespace game
 				{
 					input::KeyUp(msg.wParam);
 				}
-
 				else
 				{
 					DispatchMessage(&msg);
@@ -144,13 +171,24 @@ namespace game
 			}
 			else
 			{
+				time::UpdateTime();
 				FixeUpdate();
-
 				Update();
-
 				Render();
 			}
 		}
+
+		UnLoad();
+	}
+
+	void GameManager::Load()
+	{
+		hTestBitmap = render::LoadImdage("Mario.bmp");
+	}
+
+	void GameManager::UnLoad()
+	{
+		render::ReleaseImage(hTestBitmap);
 	}
 
 
@@ -167,7 +205,7 @@ namespace game
 
 	void GameManager::DrawFPS()
 	{
-		static ULONGLONG elapsedTime;
+		static double elapsedTime;
 		static int UpdateCount;
 		static int FixedUpdateCount;
 
@@ -175,7 +213,7 @@ namespace game
 
 		if (elapsedTime >= 1000)
 		{
-			elapsedTime = 0;
+			elapsedTime = 0.f;
 			UpdateCount = m_UpdateCount;
 			FixedUpdateCount = m_FixedUpdateCount;
 
@@ -201,8 +239,10 @@ namespace game
 		{
 			render::DrawCircle(blueCircles[i].x, blueCircles[i].y, blueCircles[i].size, blueCircles[i].color);
 		}
-
+		render::DrawBitmap(50, 50, hTestBitmap);
 		render::DrawLine(player.x - 50, player.y + 50, player.x + 50, player.y + 50, RGB(255, 0, 0));
 		render::DrawRect(player.x - 25, player.y - 25, 50, 50, RGB(255, 0, 255));
+
+		
 	}
 }

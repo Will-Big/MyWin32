@@ -4,22 +4,24 @@
 
 namespace time
 {
-	ULONGLONG previousTime;
-	ULONGLONG currentTime;
-	ULONGLONG deltaTime;
+	LARGE_INTEGER previousTime = { 0 };
+	LARGE_INTEGER currentTime = { 0 };
+	LARGE_INTEGER frequency = { 0 };
+
+	float deltaTime = 0;
 
 	void InitTime()
 	{
-		previousTime = currentTime = GetTickCount64();
+		QueryPerformanceFrequency(&frequency);
+		QueryPerformanceCounter(&previousTime);
 	}
 
 	void UpdateTime()
 	{
 		previousTime = currentTime;
+		QueryPerformanceCounter(&currentTime);
 
-		currentTime = GetTickCount64();
-
-		deltaTime = currentTime - previousTime;
+		deltaTime = (float)(currentTime.QuadPart - previousTime.QuadPart) / (float)frequency.QuadPart * 1000.0f; //ms
 	}
 
 	const float GetFrameRate()
@@ -29,6 +31,6 @@ namespace time
 		return ceil(((1000.0f / deltaTime) * 1000) / 1000);
 	}
 
-	const ULONGLONG GetDeltaTime() { return deltaTime; }
+	const float GetDeltaTime() { return deltaTime; }
 
 }

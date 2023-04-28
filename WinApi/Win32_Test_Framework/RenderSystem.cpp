@@ -127,4 +127,30 @@ namespace render
 
 		TextOutA(backMemDC, x, y, text, strlen(text));
 	}
+
+	void DrawBitmap(int x, int y, HBITMAP hBitmap)
+	{
+		HDC bitmapMemDC = CreateCompatibleDC(frontMemDC);
+
+		HBITMAP hOldBitmap = (HBITMAP)SelectObject(bitmapMemDC, hBitmap);
+
+		BITMAP bm;
+		GetObject(hBitmap, sizeof(BITMAP), &bm);
+
+		::BitBlt(backMemDC, x, y, bm.bmWidth, bm.bmHeight, bitmapMemDC, 0, 0, SRCCOPY);
+
+		DeleteDC(bitmapMemDC);
+	}
+
+	HBITMAP LoadImdage(const char* path)
+	{
+		HBITMAP hBitmap = (HBITMAP)LoadImageA(NULL, path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+
+		return hBitmap;
+	}
+
+	void ReleaseImage(HBITMAP hBitmap)
+	{
+		DeleteObject(hBitmap);
+	}
 }

@@ -21,6 +21,10 @@ namespace game
 
 		void Run();
 
+		void Load();
+
+		void UnLoad();
+
 		static GameManager* GetInstance();
 
 		static void DestroyInstance();
