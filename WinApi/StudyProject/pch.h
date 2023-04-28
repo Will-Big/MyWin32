@@ -14,7 +14,9 @@ using std::make_pair;
 
 // 임의 작성 시작
 #include <gdiplus.h>
+#include <gdiplusheaders.h>
 #pragma comment(lib, "gdiplus")
+using namespace Gdiplus;
 
 // 임의 작성 끝
 

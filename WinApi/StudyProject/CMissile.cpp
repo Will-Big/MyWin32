@@ -92,7 +92,7 @@ void CMissile::update()
 	vPos.y += 600.f * m_vDir.y * fDT;
 	m_fRadian += PI * fDT;
 
-	//Rotate(m_fRadian);
+	Rotate(m_fRadian);
 
 
 	SetPos(vPos);
@@ -107,15 +107,17 @@ void CMissile::render(HDC _dc)
 
 	//HDC tempDC = CreateCompatibleDC(CCore::GetInst()->GetMainDC());
 
-	TransparentBlt(_dc
-		, (int)(vPos.x - (float)(vScale.x / 2))
-		, (int)(vPos.y - (float)(vScale.y / 2))
-		, (int)vScale.x, (int)vScale.y
-		, m_pTex->GetDC()
-		, 0, 0, iWidth, iHeight
-		, RGB(255, 255, 255));
+	Graphics G(_dc);
 
- 	//BOOL boo = PlgBlt(_dc, m_pRotate, tempDC, vPos.x, vPos.y, vScale.x, vScale.y, 0, 0, 0);
+	//TransparentBlt(_dc
+	//	, (int)(vPos.x - (float)(vScale.x / 2))
+	//	, (int)(vPos.y - (float)(vScale.y / 2))
+	//	, (int)vScale.x, (int)vScale.y
+	//	, m_pTex->GetDC()
+	//	, 0, 0, iWidth, iHeight
+	//	, RGB(255, 255, 255));
+
+  	BOOL boo = PlgBlt(_dc, m_pRotate, m_pTex->GetDC(), vPos.x, vPos.y, vScale.x, vScale.y, 0, 0, 0);
 	
 	//StretchBlt(_dc
 	//	, vPos.x - (float)(vScale.x / 2)
