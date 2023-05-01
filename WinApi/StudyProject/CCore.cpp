@@ -6,8 +6,7 @@
 #include "CObject.h"
 #include "CSceneMgr.h"
 #include "CPathMgr.h"
-
-//CObject g_obj;
+#include "CCollisionMgr.h"
 
 CCore::CCore()
 	: m_hWnd(0)
@@ -75,8 +74,10 @@ void CCore::progress()
 	//Manager update
 	CTimeMgr::GetInst()->update();
 	CKeyMgr::GetInst()->update();
+
 	CSceneMgr::GetInst()->update();
-	
+	CCollisionMgr::GetInst()->update();
+
 	// ========
 	// Rendering
 	// ========

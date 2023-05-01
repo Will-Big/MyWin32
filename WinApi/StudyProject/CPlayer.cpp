@@ -21,7 +21,8 @@ CPlayer::CPlayer()
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Mario.bmp");
 	
 	CreateCollider();
-	GetCollider()->SetScale(Vec2(100.f, 100.f));
+	GetCollider()->SetOffsetPos(Vec2(0.f, 10.f));
+	GetCollider()->SetScale(Vec2(35.f, 80.f));
 }
 
 CPlayer::~CPlayer()
@@ -68,7 +69,7 @@ void CPlayer::CreateMissile()
 	pMissile->SetScale(Vec2(25.f, 25.f));
 	pMissile->SetDir({ 0.f, -1.f });
 	CScene* pCurScene = CSceneMgr::GetInst()->GetCurScene();
-	pCurScene->AddObject(pMissile, GROUP_TYPE::DEFAULT);
+	pCurScene->AddObject(pMissile, GROUP_TYPE::MISSILE);
 }
 
 

@@ -9,6 +9,8 @@
 #include "CResMgr.h"
 #include "CTexture.h"
 
+#include "CCollider.h"
+
 CMonster::CMonster()
 	: m_vCenterPos(Vec2(0.f, 0.f))
 	, m_fSpeed(100.f)
@@ -17,6 +19,7 @@ CMonster::CMonster()
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"Monster", L"texture\\Goomba.bmp");
 	CreateCollider();
+	GetCollider()->SetScale(Vec2(50.f, 50.f));
 }
 
 CMonster::~CMonster()
@@ -84,6 +87,8 @@ void CMonster::render(HDC _dc)
 		, m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 255, 255));
+
+	component_render(_dc);
 }
 
 
