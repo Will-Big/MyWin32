@@ -19,8 +19,9 @@ CPlayer::CPlayer()
 {
 	// Texture 로딩하기
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Mario.bmp");
+	
 	CreateCollider();
-
+	GetCollider()->SetScale(Vec2(100.f, 100.f));
 }
 
 CPlayer::~CPlayer()
@@ -90,4 +91,6 @@ void CPlayer::render(HDC _dc)
 		, m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 0, 255));
+
+	component_render(_dc);
 }

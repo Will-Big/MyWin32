@@ -13,7 +13,6 @@ private:
 	float		m_fRadian;
 	CTexture*	m_pTex;
 	POINT		m_pRotate[3];
-	
 
 public:
 	void SetDir(float _fTheta) { m_fTheta = _fTheta; }

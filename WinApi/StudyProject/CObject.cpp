@@ -27,6 +27,8 @@ void CObject::CreateCollider()
 
 void CObject::update()
 {
+
+
 }
 
 void CObject::finalupdate()
@@ -37,4 +39,13 @@ void CObject::finalupdate()
 
 void CObject::render(HDC _dc)
 {
+	component_render(_dc);
+}
+
+void CObject::component_render(HDC _dc)
+{
+	if (m_pCollider != nullptr)
+	{
+		m_pCollider->render(_dc);
+	}
 }

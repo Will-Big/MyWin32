@@ -62,7 +62,10 @@
     <Filter Include="Engine\03.Manager\ResMgr">
       <UniqueIdentifier>{9a195bad-84c5-47a7-8bb4-2cb2de6fae8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\07. Component">
+    <Filter Include="Engine\08.Module">
+      <UniqueIdentifier>{8fc13f94-5d93-4086-8d33-4dbd4ada8b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\07.Component">
       <UniqueIdentifier>{784e3af6-db60-455a-8aa1-2f7ccc43a9e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -134,7 +137,10 @@
       <Filter>Engine\03.Manager\ResMgr</Filter>
     </ClInclude>
     <ClInclude Include="CCollider.h">
-      <Filter>Engine\07. Component</Filter>
+      <Filter>Engine\07.Component</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectGDI.h">
+      <Filter>Engine\08.Module</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -185,7 +191,10 @@
       <Filter>Engine\03.Manager\ResMgr</Filter>
     </ClCompile>
     <ClCompile Include="CCollider.cpp">
-      <Filter>Engine\07. Component</Filter>
+      <Filter>Engine\07.Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectGDI.cpp">
+      <Filter>Engine\08.Module</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

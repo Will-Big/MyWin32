@@ -9,6 +9,33 @@
 
 //CObject g_obj;
 
+CCore::CCore()
+	: m_hWnd(0)
+	, m_ptResolution{}
+	, m_hDC(0)
+	, m_hBit(0)
+	, m_memDC(0)
+	, m_arrBrush{}
+	, m_arrPen{}
+{
+
+}
+
+CCore::~CCore()
+{
+	ReleaseDC(m_hWnd, m_hDC);
+
+	// CreateCompatible 으로 생성된 DC 는 아래와 같이 해제해야함
+	DeleteDC(m_memDC);
+	DeleteObject(m_hBit);
+
+	for (int i = 0; i < (UINT)PEN_TYPE::END; ++i)
+	{
+		DeleteObject(m_arrPen[i]);
+	}
+}
+
+
 int CCore::init(HWND _hWnd, POINT _ptResolution)
 {
 	m_hWnd = _hWnd;
@@ -28,6 +55,9 @@ int CCore::init(HWND _hWnd, POINT _ptResolution)
 	// DC 가 디폴트로 가지고 있는 1픽셀의 비트맵을 반환(사용하지 않으므로 삭제)
 	HBITMAP hOldBit = (HBITMAP)SelectObject(m_memDC, m_hBit);
 	DeleteObject(hOldBit);
+
+	// 자주 사용할 브러쉬, 펜 생성
+	CreateBrushPen();
 
 	// Manager 초기화
 	CTimeMgr::GetInst()->init();
@@ -69,21 +99,14 @@ void CCore::render()
 {
 }
 
-CCore::CCore()
-	: m_hWnd(0)
-	, m_ptResolution{}
-	, m_hDC(0)
-	, m_hBit(0)
-	, m_memDC(0)
+void CCore::CreateBrushPen()
 {
+	// hollow brush
+	m_arrBrush[(UINT)BRUSH_TYPE::HOLLOW] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
 
+	// red green blue pen
+	m_arrPen[(UINT)PEN_TYPE::RED] = (HPEN)CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+	m_arrPen[(UINT)PEN_TYPE::GREEN] = (HPEN)CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+	m_arrPen[(UINT)PEN_TYPE::BLUE] = (HPEN)CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
 }
 
-CCore::~CCore()
-{
-	ReleaseDC(m_hWnd, m_hDC);
-
-	// CreateCompatible 으로 생성된 DC 는 아래와 같이 해제해야함
-	DeleteDC(m_memDC);
-	DeleteObject(m_hBit);
-}

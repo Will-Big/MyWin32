@@ -20,6 +20,7 @@ CMissile::CMissile()
 {
 	m_vDir.Normalize();
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"Missile", L"texture//FireBall.bmp");
+	//m_pTex->MakeTransparent();
 	CreateCollider();
 }
 
@@ -92,6 +93,9 @@ void CMissile::update()
 	vPos.y += 600.f * m_vDir.y * fDT;
 	m_fRadian += PI * fDT * 10.f;
 
+	if (m_fRadian > 2 * PI)
+		m_fRadian = 0.f;
+
 	Rotate(m_fRadian);
 
 
@@ -105,21 +109,8 @@ void CMissile::render(HDC _dc)
 	int iWidth = (int)m_pTex->Width();
 	int iHeight = (int)m_pTex->Height();
 
-	//HDC tempDC = CreateCompatibleDC(CCore::GetInst()->GetMainDC());
-
-	//TransparentBlt(_dc
-	//	, (int)(vPos.x - (float)(vScale.x / 2))
-	//	, (int)(vPos.y - (float)(vScale.y / 2))
-	//	, (int)vScale.x, (int)vScale.y
-	//	, m_pTex->GetDC()
-	//	, 0, 0, iWidth, iHeight
-	//	, RGB(255, 255, 255));
 	HDC hdcTex = m_pTex->GetDC();
-	// SetBkColor(hdcTex, RGB(255, 0, 255));
-	// SetBkMode(hdcTex, TRANSPARENT); // set the background mode to transparent
-    
-	// 사실상 PlgBlt 에서 크기, 회전
-	// 
+
    	BOOL boo = PlgBlt(_dc, m_pRotate, hdcTex, 0, 0, iWidth, iHeight, 0, 0, 0);
 
 	

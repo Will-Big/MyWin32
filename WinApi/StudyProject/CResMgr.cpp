@@ -35,6 +35,7 @@ CTexture* CResMgr::LoadTexture(const wstring& _strKey, const wstring& _strRelati
 	pTex->Load(strFilePath);
 	pTex->SetKey(_strKey);
 	pTex->SetRelativePath(_strRelativePath);
+	pTex->MakeTransparent();
 
 	m_mapTex.insert(make_pair(_strKey, pTex));
 

@@ -14,6 +14,7 @@ public:
     UINT Height() { return m_bitInfo.bmHeight; }
 
     HDC GetDC() { return m_dc; }
+    void MakeTransparent(UCHAR r = 255U, UCHAR g = 255U, UCHAR b = 255U);
 
 private:
     CTexture();
