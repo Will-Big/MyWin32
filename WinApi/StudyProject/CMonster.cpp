@@ -49,15 +49,15 @@ void CMonster::update()
 	Vec2 vMisslePos = vCurPos;
 	vMisslePos.y += GetScale().y / 2.f;
 
-	if (dCurSec < dPrevSec)
-	{
-		CMissile* pMissile = new CMissile;
-		pMissile->SetPos(vMisslePos);
-		pMissile->SetDir(Vec2(0.f, 1.f));
-		pMissile->SetScale(Vec2(GetScale().x / 2.f, GetScale().y / 2.f));
-		CScene* pCurScene = CSceneMgr::GetInst()->GetCurScene();
-		pCurScene->AddObject(pMissile, GROUP_TYPE::DEFAULT);
-	}
+	//if (dCurSec < dPrevSec)
+	//{
+	//	CMissile* pMissile = new CMissile;
+	//	pMissile->SetPos(vMisslePos);
+	//	pMissile->SetDir(Vec2(0.f, 1.f));
+	//	pMissile->SetScale(Vec2(GetScale().x / 2.f, GetScale().y / 2.f));
+	//	CScene* pCurScene = CSceneMgr::GetInst()->GetCurScene();
+	//	pCurScene->AddObject(pMissile, GROUP_TYPE::MONSTER);
+	//}
 
 	SetPos(vCurPos);
 }

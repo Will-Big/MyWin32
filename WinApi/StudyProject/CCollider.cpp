@@ -6,8 +6,13 @@
 
 #include "SelectGDI.h"
 
+// 클래스 멤버 변수의 초기화에는 앞에 타입을 적어줘야한다.
+// 전역에서 초기화 해줘야 하며 cpp 파일에서 해야 재정의 에러가 발생하지 않는다
+UINT CCollider::g_iNextID = 0;
+
 CCollider::CCollider()
 	: m_pOwner(nullptr)
+	, m_iID(g_iNextID++)
 	, m_vOffsetPos{}
 	, m_vFinalPos{}
 	, m_vScale{}

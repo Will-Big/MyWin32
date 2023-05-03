@@ -26,6 +26,8 @@ public:
 
 public:
 	void AddObject(CObject* _pObj, GROUP_TYPE _eType) { m_arrObj[(UINT)_eType].push_back(_pObj); }
+	// _eType 을 갖는 그룹의 벡터를 반환
+	const vector<CObject*>& GetGroupObject(GROUP_TYPE _eType) { return m_arrObj[(UINT)_eType]; }
 
 public:
 	CScene();

@@ -29,7 +29,7 @@ void CScene_Start::Enter()
 	pObj->SetPos(Vec2(640.f, 384.f));
 	pObj->SetScale(Vec2(100.f, 100.f));
  	AddObject(pObj, GROUP_TYPE::PLAYER);
-	
+	 
 	// Monster Object 추가
 	// 변수 선언과 동시에 대입을 하면? -> 복사 생성자가 호출됨
 	int iMonCount = 16;

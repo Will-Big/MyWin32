@@ -88,7 +88,7 @@ void CPlayer::render(HDC _dc)
 	TransparentBlt(_dc
 		, (int)(vPos.x - (float)(vScale.x / 2))
 		, (int)(vPos.y - (float)(vScale.y / 2))
-		, vScale.x, vScale.y
+		, (int)vScale.x, (int)vScale.y
 		, m_pTex->GetDC()
 		, 0, 0, iWidth, iHeight
 		, RGB(255, 0, 255));
