@@ -89,7 +89,7 @@ void CCore::progress()
 	// 프레임 드랍을 많이 일으키는 작업
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
 
-	//CTimeMgr::GetInst()->render();
+	CTimeMgr::GetInst()->render();
 }
 
 void CCore::update()

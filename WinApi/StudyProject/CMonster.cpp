@@ -28,6 +28,7 @@ CMonster::~CMonster()
 
 void CMonster::update()
 {
+	return;
 	Vec2 vCurPos = GetPos();
 
 	// 진행 방향으로 시간당 m_fSpeed 만큼 이동

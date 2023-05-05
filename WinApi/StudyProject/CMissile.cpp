@@ -72,11 +72,6 @@ void CMissile::Rotate(float _fRadian)
 		}
 	}
 
-	// UVÁÂÇ¥ ÁöÁ¤
-	//POINT UV = { 37, 40 };
-	//POINT UV_SIZE = { 21, 24 };
-	//PlgBlt(backMemDC, points, textureDC, UV.x, UV.y, UV_SIZE.x, UV_SIZE.y, 0, 0, 0);
-
 	m_pRotate[0] = points[0];
 	m_pRotate[1] = points[1];
 	m_pRotate[2] = points[2];

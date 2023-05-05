@@ -83,7 +83,7 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 				continue;
 
 			CCollider* pLeftCol = vecLeft[i]->GetCollider();
-			CCollider* pRightCol = vecRight[i]->GetCollider();
+			CCollider* pRightCol = vecRight[j]->GetCollider();
 
 			// 두 총돌체의 조합 아이디 생성
 			COLLIDER_ID ID;
@@ -140,7 +140,17 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 
 bool CCollisionMgr::IsCollision(CCollider* _pLeftCol, CCollider* _pRightCol)
 {
-	Vec2 vLeftOffset = _pLeftCol->GetOffsetPos();
-	Vec2 vRightOffset = _pRightCol->GetOffsetPos();
+	Vec2 vLeftPos = _pLeftCol->GetFinalPos();
+	Vec2 vLeftScale = _pLeftCol->GetScale();
+
+	Vec2 vRightPos = _pRightCol->GetFinalPos();
+	Vec2 vRightScale = _pRightCol->GetScale();
+	
+	if (abs(vLeftPos.x - vRightPos.x) < (vLeftScale.x + vRightScale.x) / 2.f
+		&& abs(vLeftPos.y - vRightPos.y) < (vLeftScale.y + vRightScale.y) / 2.f)
+	{
+		return true;
+	}
+
 	return false;
 }
