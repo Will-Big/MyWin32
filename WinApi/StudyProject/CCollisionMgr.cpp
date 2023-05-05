@@ -68,6 +68,7 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 	// 따라서 받을 때도 참조로 받아야 함
 	const vector<CObject*>& vecLeft = pCurScene->GetGroupObject(_eLeft);
 	const vector<CObject*>& vecRight = pCurScene->GetGroupObject(_eRight);
+	unordered_map<ULONGLONG, bool>::iterator iter;
 
 	for (size_t i = 0; i < vecLeft.size(); ++i)
 	{
@@ -77,19 +78,59 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 
 		for (size_t j = 0; j < vecRight.size(); ++j)
 		{
-			// 충돌체가 없거나 자신과 같은 주소값(자기 자신)을 갖는 오브젝트일 경우
+			// 충돌체가 없거나 자신과 같은 주소값(=자기 자신)을 갖는 오브젝트일 경우
 			if (vecRight[i]->GetCollider() == nullptr || vecLeft[i] == vecRight[j])
 				continue;
+
+			CCollider* pLeftCol = vecLeft[i]->GetCollider();
+			CCollider* pRightCol = vecRight[i]->GetCollider();
+
+			// 두 총돌체의 조합 아이디 생성
+			COLLIDER_ID ID;
+			ID.Left_id = pLeftCol->GetID();
+			ID.Right_id = pRightCol->GetID();
+
+			iter = m_mapColInfo.find(ID.ID);
+
+			// 등록되지 않은 아이디
+			if (iter == m_mapColInfo.end())
+			{
+				// 새로운 아이디 생성(충돌하지 않음)
+				m_mapColInfo.insert(make_pair(ID.ID, false));
+				iter = m_mapColInfo.find(ID.ID);
+			}
+
 			
 			// 이전 프레임의 정보를 이용해서
 			// 충돌 전인지, 충돌 중이었는지, 충돌을 벗어났는지 확인함
-			if (IsCollision(vecLeft[i]->GetCollider(), vecRight[i]->GetCollider()))
+			if (IsCollision(pLeftCol, pRightCol))
 			{
+				// 현재 충돌 중
+				if (iter->second)
+				{
+					// 이전에도 충돌 함
+					pLeftCol->OnCollision(pRightCol);
+					pRightCol->OnCollision(pLeftCol);
+				}
+				else
+				{
+					// 이전에는 충돌하지 않음
+					pLeftCol->OnCollisionEnter(pRightCol);
+					pRightCol->OnCollisionEnter(pLeftCol);
+					iter->second = true;
+				}
 
 			}
 			else
 			{
-
+				// 현재 충돌 중이 아님
+				if (iter->second)
+				{
+					// 이전에는 충돌 함
+					pLeftCol->OnCollisionExit(pRightCol);
+					pRightCol->OnCollisionExit(pLeftCol);
+					iter->second = false;
+				}
 			}
 
 		}

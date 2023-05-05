@@ -12,6 +12,10 @@ using std::vector;
 using std::map;
 using std::make_pair;
 
+// 임의 작성 맵
+#include <unordered_map>
+using std::unordered_map;
+
 // 임의 작성 시작
 #include <gdiplus.h>
 #include <gdiplusheaders.h>
