@@ -7,6 +7,7 @@
 #include "CSceneMgr.h"
 #include "CPathMgr.h"
 #include "CCollisionMgr.h"
+#include "CEventMgr.h"
 
 CCore::CCore()
 	: m_hWnd(0)
@@ -75,7 +76,13 @@ void CCore::progress()
 	CTimeMgr::GetInst()->update();
 	CKeyMgr::GetInst()->update();
 
+
+	// ========
+	// Scene Update
+	// ========
 	CSceneMgr::GetInst()->update();
+
+	// 충돌 체크
 	CCollisionMgr::GetInst()->update();
 
 	// ========
@@ -86,18 +93,14 @@ void CCore::progress()
 
 	CSceneMgr::GetInst()->render(m_memDC);
 
-	// 프레임 드랍을 많이 일으키는 작업
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y, m_memDC, 0, 0, SRCCOPY);
 
 	CTimeMgr::GetInst()->render();
-}
 
-void CCore::update()
-{
-}
-
-void CCore::render()
-{
+	// ========
+	// 이벤트 지연 처리
+	// ========
+	CEventMgr::GetInst()->update();
 }
 
 void CCore::CreateBrushPen()

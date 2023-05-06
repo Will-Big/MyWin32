@@ -24,10 +24,6 @@ public:
 	void progress();
 
 private:
-	void update();
-	void render();
-
-private:
 	void CreateBrushPen();
 
 public:

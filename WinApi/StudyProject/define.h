@@ -26,8 +26,9 @@ enum class GROUP_TYPE
 {
 	DEFAULT,
 	PLAYER,
-	MISSILE,
 	MONSTER,
+	PROJ_PLAYER,	// 플레이어 투사체
+	PROJ_MONSTER,	// 몬스터 투사체
 
 	END = 32,
 };

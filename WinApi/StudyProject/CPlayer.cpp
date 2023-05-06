@@ -67,9 +67,9 @@ void CPlayer::CreateMissile()
 	CMissile* pMissile = new CMissile;
 	pMissile->SetPos(vMissilePos);
 	pMissile->SetScale(Vec2(25.f, 25.f));
-	pMissile->SetDir({ 0.f, -1.f });
-	CScene* pCurScene = CSceneMgr::GetInst()->GetCurScene();
-	pCurScene->AddObject(pMissile, GROUP_TYPE::MISSILE);
+	pMissile->SetDir(Vec2(0.f, -1.f));
+
+	CreateObject(pMissile, GROUP_TYPE::PROJ_PLAYER);
 }
 
 

@@ -14,6 +14,8 @@ private:
 
 	CCollider*	m_pCollider;
 
+	bool		m_bAlive;
+
 public:
 	void SetPos(Vec2 _vPos) { m_vPos = _vPos; }
 	void SetScale(Vec2 _vScale) { m_vScale = _vScale; }
@@ -27,6 +29,8 @@ public:
 	void CreateCollider();
 	CCollider* GetCollider() { return m_pCollider; }
 
+	bool IsDead() { return m_bAlive; }
+
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);
 	virtual void OnCollisionExit(CCollider* _pOther);
@@ -38,8 +42,14 @@ public:
 
 	void component_render(HDC _dc);
 
+private:
+	// EventMgr 에서만 처리
+	void SetDead() { m_bAlive = false; }
+
 public:
 	CObject();
 	virtual ~CObject();
+
+	friend class CEventMgr;
 };
 
