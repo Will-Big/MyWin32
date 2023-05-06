@@ -23,6 +23,11 @@ public:
     void SetCenterPos(Vec2 _vPos) { m_vCenterPos = _vPos; }
 
 public:
+    void OnCollision(CCollider* _pOther) override;
+    void OnCollisionEnter(CCollider* _pOther) override;
+    void OnCollisionExit(CCollider* _pOther) override;
+
+public:
     void update() override;
     void render(HDC _dc) override;
 

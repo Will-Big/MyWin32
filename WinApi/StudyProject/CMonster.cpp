@@ -26,6 +26,19 @@ CMonster::~CMonster()
 {
 }
 
+void CMonster::OnCollision(CCollider* _pOther)
+{
+}
+
+void CMonster::OnCollisionEnter(CCollider* _pOther)
+{
+	_pOther->GetObj();
+}
+
+void CMonster::OnCollisionExit(CCollider* _pOther)
+{
+}
+
 void CMonster::update()
 {
 	return;

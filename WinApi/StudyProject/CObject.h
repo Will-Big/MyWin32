@@ -7,6 +7,8 @@ class CCollider;
 class CObject
 {
 private:
+	wstring		m_strName;
+
 	Vec2		m_vPos;
 	Vec2		m_vScale;
 
@@ -19,8 +21,15 @@ public:
 	Vec2 GetPos() { return m_vPos; }
 	Vec2 GetScale() { return m_vScale; }
 
+	void SetName(const wstring& _strName) { m_strName = _strName; }
+	const wstring& GetName() { return m_strName; }
+
 	void CreateCollider();
 	CCollider* GetCollider() { return m_pCollider; }
+
+	virtual void OnCollision(CCollider* _pOther);
+	virtual void OnCollisionEnter(CCollider* _pOther);
+	virtual void OnCollisionExit(CCollider* _pOther);
 
 public:
 	virtual void update() = 0;
