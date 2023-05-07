@@ -217,7 +217,9 @@
     <ClCompile Include="CEventMgr.cpp">
       <Filter>Engine\03.Manager\EventMgr</Filter>
     </ClCompile>
-    <ClCompile Include="func.cpp" />
+    <ClCompile Include="func.cpp">
+      <Filter>Engine\01.Header</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="StudyProject.rc">

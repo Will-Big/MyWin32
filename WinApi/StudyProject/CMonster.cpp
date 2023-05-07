@@ -32,7 +32,16 @@ void CMonster::OnCollision(CCollider* _pOther)
 
 void CMonster::OnCollisionEnter(CCollider* _pOther)
 {
-	_pOther->GetObj();
+	// ³» ¸¾´ë·Î
+ 	CObject* pOtherObj = _pOther->GetObj();
+
+	if (pOtherObj->GetName() == L"Missile_Player")
+	{
+		m_iHp--;
+
+		if (m_iHp <= 0)
+			DeleteObject(this);
+	}
 }
 
 void CMonster::OnCollisionExit(CCollider* _pOther)

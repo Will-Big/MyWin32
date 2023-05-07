@@ -29,7 +29,7 @@ public:
 	void CreateCollider();
 	CCollider* GetCollider() { return m_pCollider; }
 
-	bool IsDead() { return m_bAlive; }
+	bool IsDead() { return !m_bAlive; }
 
 	virtual void OnCollision(CCollider* _pOther);
 	virtual void OnCollisionEnter(CCollider* _pOther);

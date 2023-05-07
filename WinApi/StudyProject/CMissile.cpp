@@ -10,6 +10,8 @@
 
 #include "CCore.h"
 
+#include "CCollider.h"
+
 
 CMissile::CMissile()
 	: m_fTheta(3.f * PI / 2.f)
@@ -22,6 +24,8 @@ CMissile::CMissile()
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"Missile", L"texture//FireBall.bmp");
 	//m_pTex->MakeTransparent();
 	CreateCollider();
+	GetCollider()->SetOffsetPos(Vec2(12.5f, 12.5f));
+	GetCollider()->SetScale(Vec2(25.f, 25.f));
 }
 
 CMissile::~CMissile()
@@ -77,6 +81,15 @@ void CMissile::Rotate(float _fRadian)
 	m_pRotate[2] = points[2];
 }
 
+void CMissile::OnCollisionEnter(CCollider* _pOther)
+{
+	CObject* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Monster")
+	{
+		DeleteObject(this);
+	}
+}
+
 void CMissile::update()
 {
 	Vec2 vPos = GetPos();
@@ -93,7 +106,6 @@ void CMissile::update()
 
 	Rotate(m_fRadian);
 
-
 	SetPos(vPos);
 }
 
@@ -107,7 +119,7 @@ void CMissile::render(HDC _dc)
 	HDC hdcTex = m_pTex->GetDC();
 
    	BOOL boo = PlgBlt(_dc, m_pRotate, hdcTex, 0, 0, iWidth, iHeight, 0, 0, 0);
-
+	component_render(_dc);
 	
 	//StretchBlt(_dc
 	//	, vPos.x - (float)(vScale.x / 2)

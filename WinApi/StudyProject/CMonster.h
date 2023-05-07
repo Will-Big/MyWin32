@@ -14,6 +14,9 @@ private:
     int         m_iDir; // 1, -1
     CTexture*   m_pTex;
     double      dCurSec = 0;
+
+    // ³» ¸¾´ë·Î
+    int         m_iHp = 5;
     
 
 public:

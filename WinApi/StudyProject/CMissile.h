@@ -23,6 +23,7 @@ public:
 	}
 	// 내맘대로 함수
 	void Rotate(float _fRadin);
+	void OnCollisionEnter(CCollider* _pOther) override;
 
 public:
 	void update() override;

@@ -35,10 +35,17 @@ void CTimeMgr::update()
 
 	// 이전 프레임의 카운팅과 현재 프레임 카운팅 값의 차이를 구한다.
 	m_dDT = (double)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / (double)m_llFrequency.QuadPart;
-
 	
 	// 이전 카운트 값을 현재 값으로 갱신(다음번의 계산을 위해서)
 	m_llPrevCount = m_llCurCount;
+
+
+#ifdef _DEBUG
+	// 디버그 모드라면 자동으로 전처리기가 활성화됨
+	// 디버그 모드 중 정지했을 때 다음 프레임까지의 시간을 60분의 1초로 보장해줌
+	if (m_dDT > 1.f / 60.f)
+		m_dDT = 1.f / 60.f;
+#endif
 }
 
 void CTimeMgr::render()

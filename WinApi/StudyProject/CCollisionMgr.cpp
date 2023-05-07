@@ -79,7 +79,7 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 		for (size_t j = 0; j < vecRight.size(); ++j)
 		{
 			// 충돌체가 없거나 자신과 같은 주소값(=자기 자신)을 갖는 오브젝트일 경우
-			if (vecRight[i]->GetCollider() == nullptr || vecLeft[i] == vecRight[j])
+			if (vecRight[j]->GetCollider() == nullptr || vecLeft[i] == vecRight[j])
 				continue;
 
 			CCollider* pLeftCol = vecLeft[i]->GetCollider();
@@ -108,16 +108,30 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 				// 현재 충돌 중
 				if (iter->second)
 				{
-					// 이전에도 충돌 함
-					pLeftCol->OnCollision(pRightCol);
-					pRightCol->OnCollision(pLeftCol);
+					if (vecLeft[i]->IsDead() || vecRight[j]->IsDead())
+					{
+						// 삭제 예정인 오브젝트와 충돌했다면, 충돌 해제
+						pLeftCol->OnCollisionExit(pRightCol);
+						pRightCol->OnCollisionExit(pLeftCol);
+						iter->second = false;
+					}
+					else
+					{
+						// 이전에도 충돌 함
+						pLeftCol->OnCollision(pRightCol);
+						pRightCol->OnCollision(pLeftCol);
+					}
 				}
 				else
 				{
-					// 이전에는 충돌하지 않음
-					pLeftCol->OnCollisionEnter(pRightCol);
-					pRightCol->OnCollisionEnter(pLeftCol);
-					iter->second = true;
+					if (!vecLeft[i]->IsDead() && !vecRight[j]->IsDead())
+					{
+						// 이전에는 충돌하지 않음
+						pLeftCol->OnCollisionEnter(pRightCol);
+						pRightCol->OnCollisionEnter(pLeftCol);
+						iter->second = true;
+					}
+					// 삭제 예정인 오브젝트와 충돌했다면 충돌 처리하지 않음
 				}
 
 			}
@@ -131,6 +145,9 @@ void CCollisionMgr::CollisionGroupUpdate(GROUP_TYPE _eLeft, GROUP_TYPE _eRight)
 					pRightCol->OnCollisionExit(pLeftCol);
 					iter->second = false;
 				}
+				// 삭제 예정인 오브젝트라면 굳이 따로 처리해주지 않아도
+				// 이 구문에서 알아서 Exit 함수를 수행해주기 떄문에
+				// 예외처리를 할 필요가 없음
 			}
 
 		}
