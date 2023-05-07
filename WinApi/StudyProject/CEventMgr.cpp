@@ -52,9 +52,9 @@ void CEventMgr::Execute(const tEvent& _eve)
 	{
 		// lParam : Object Address
 		// wParam : NULL
+
 		// Object 를 Dead 상태로 변경
 		// 삭제 예정 오브젝트를 모아둔다.
-
 		CObject* pDeadObj = (CObject*)_eve.lParam;
 		pDeadObj->SetDead();
 		m_vecDead.push_back(pDeadObj);
@@ -62,7 +62,10 @@ void CEventMgr::Execute(const tEvent& _eve)
 		break;
 	case EVENT_TYPE::SCENE_CHANGE:
 	{
+		// lParam : Next Scene Type
+		// wParam : NULL
 
+		CSceneMgr::GetInst()->ChangeScene((SCENE_TYPE)_eve.lParam);
 	}
 		break;
 	}

@@ -3,13 +3,29 @@
 
 #include "CObject.h"
 
+CScene::CScene()
+{
+}
+
+CScene::~CScene()
+{
+	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
+	{
+		for (size_t j = 0; j < m_arrObj[i].size(); ++j)
+		{
+			// m_arrObj[i] 그룹 벡터의 j 물체 삭제
+			delete m_arrObj[i][j];
+		}
+	}
+}
+
 void CScene::update()
 {
 	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
 		for (size_t j = 0; j < m_arrObj[i].size(); ++j)
 		{
-			if(!m_arrObj[i][j]->IsDead())
+			if (!m_arrObj[i][j]->IsDead())
 			{
 				m_arrObj[i][j]->update();
 			}
@@ -49,18 +65,19 @@ void CScene::render(HDC _dc)
 	}
 }
 
-CScene::CScene()
+void CScene::DeleteGroup(GROUP_TYPE _eTarget)
 {
+	// 정확한 호출
+	// Safe_Delete_Vec<CObject*>(m_arrObj[(UINT)_eTarget]);
+	Safe_Delete_Vec(m_arrObj[(UINT)_eTarget]);
 }
 
-CScene::~CScene()
+void CScene::DeleteAll()
 {
 	for (UINT i = 0; i < (UINT)GROUP_TYPE::END; ++i)
 	{
-		for (size_t j = 0; j < m_arrObj[i].size(); ++j)
-		{
-			// m_arrObj[i] 그룹 벡터의 j 물체 삭제
-			delete m_arrObj[i][j];
-		}
+		DeleteGroup((GROUP_TYPE)i);
 	}
 }
+
+
