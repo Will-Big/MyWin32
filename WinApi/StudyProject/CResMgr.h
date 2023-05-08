@@ -6,7 +6,6 @@ class CResMgr
 {
 	SINGLE(CResMgr)
 private:
-	// 텍스처 이름, 텍스처 포인터
 	map<wstring, CTexture*> m_mapTex;
 
 private:
