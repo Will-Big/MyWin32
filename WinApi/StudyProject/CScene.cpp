@@ -4,6 +4,7 @@
 #include "CObject.h"
 
 CScene::CScene()
+	: m_bSave(false)
 {
 }
 
@@ -63,6 +64,21 @@ void CScene::render(HDC _dc)
 			}
 		}
 	}
+}
+
+void CScene::Save()
+{
+	m_bSave = true;
+}
+
+bool CScene::Load()
+{
+	if (!m_bSave)
+		return false;
+
+
+
+	return true;
 }
 
 void CScene::DeleteGroup(GROUP_TYPE _eTarget)
