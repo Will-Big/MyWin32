@@ -182,37 +182,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    case WM_COMMAND:
-        {
-            int wmId = LOWORD(wParam);
-            // 메뉴 선택을 구문 분석합니다:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
+    case WM_LBUTTONDOWN:
+    {
+        HDC hdc = GetDC(hWnd);
+        LineTo(hdc, 100, 100);
+        LineTo(hdc, 100, 200);
+        ReleaseDC(hWnd, hdc);
+    }
         break;
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            DrawGrid(hWnd, hdc);
+            //DrawGrid(hWnd, hdc);
             EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
-    case WM_LBUTTONDOWN:
-        PointGrid(hWnd, lParam);
-        InvalidateRect(hWnd, nullptr, false);
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
