@@ -77,6 +77,9 @@
     <Filter Include="Engine\05.Scene\Scene_Tool">
       <UniqueIdentifier>{31dc1cf7-d3ba-4143-a6b4-941cd708aa28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\Monster\Creator">
+      <UniqueIdentifier>{bfc51cbc-9b23-453b-a44f-c6f50e4c47a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -163,6 +166,9 @@
     <ClInclude Include="CScene_Tool.h">
       <Filter>Engine\05.Scene\Scene_Tool</Filter>
     </ClInclude>
+    <ClInclude Include="CMonsterCreator.h">
+      <Filter>Engine\04.Object\Monster\Creator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -228,6 +234,9 @@
     </ClCompile>
     <ClCompile Include="CScene_Tool.cpp">
       <Filter>Engine\05.Scene\Scene_Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterCreator.cpp">
+      <Filter>Engine\04.Object\Monster\Creator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
