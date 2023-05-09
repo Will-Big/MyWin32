@@ -25,6 +25,8 @@ public:
 	void Rotate(float _fRadin);
 	void OnCollisionEnter(CCollider* _pOther) override;
 
+	CLONE(CMissile);
+
 public:
 	void update() override;
 	void render(HDC _dc) override;

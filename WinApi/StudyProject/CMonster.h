@@ -34,6 +34,9 @@ public:
     void update() override;
     void render(HDC _dc) override;
 
+
+    CLONE(CMonster);
+
 public:
     CMonster();
     ~CMonster();

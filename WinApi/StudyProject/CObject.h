@@ -42,12 +42,16 @@ public:
 
 	void component_render(HDC _dc);
 
+	// 자신의 복제 버전을 되돌려주는 역할
+	virtual CObject* Clone() = 0;
+
 private:
 	// EventMgr 에서만 처리
 	void SetDead() { m_bAlive = false; }
 
 public:
 	CObject();
+	CObject(const CObject& _origin);
 	virtual ~CObject();
 
 	friend class CEventMgr;
