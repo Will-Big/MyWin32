@@ -20,6 +20,7 @@ public:
 	void render();
 
 public:
+	double GetCurTime() { return (double)m_llCurCount.QuadPart / (double)m_llFrequency.QuadPart; }
 	double GetDT() { return m_dDT; }
 	float GetfDT() { return (float)m_dDT; }
 

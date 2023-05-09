@@ -16,6 +16,8 @@ CMonster::CMonster()
 	, m_fSpeed(100.f)
 	, m_fMaxDistance(50.f)
 	, m_iDir(1)
+	, m_bAttackAble(false)
+	, m_dLastTime(0)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"Monster", L"texture\\Goomba.bmp");
 	CreateCollider();
@@ -24,6 +26,25 @@ CMonster::CMonster()
 
 CMonster::~CMonster()
 {
+}
+
+void CMonster::Attack()
+{
+	Vec2 vCurPos = GetPos();
+	Vec2 vCurScale = GetScale();
+
+	CMissile* pMissile = new CMissile;
+	pMissile->SetPos(Vec2(vCurPos.x, vCurScale.y / 2.f));
+	pMissile->SetScale(Vec2(GetScale().x / 2.f, GetScale().y / 2.f));
+	pMissile->SetDir(Vec2(0.f, 1.f));
+	pMissile->SetName(L"Missile");
+	pMissile->GetCollider()->SetScale(Vec2(pMissile->GetScale()));
+	pMissile->GetCollider()->SetOffsetPos(Vec2(pMissile->GetScale().x / 2.f, pMissile->GetScale().y / 2.f));
+
+	CreateObject(pMissile, GROUP_TYPE::PROJ_MONSTER);
+
+
+	m_bAttackAble = false;
 }
 
 void CMonster::OnCollision(CCollider* _pOther)
@@ -50,7 +71,6 @@ void CMonster::OnCollisionExit(CCollider* _pOther)
 
 void CMonster::update()
 {
-	return;
 	Vec2 vCurPos = GetPos();
 
 	// 진행 방향으로 시간당 m_fSpeed 만큼 이동
@@ -64,25 +84,19 @@ void CMonster::update()
 		vCurPos.x += fDist * m_iDir;
 	}
 
-	double dPrevSec = dCurSec;
-	// 몬스터마다 받아오는 시간이 다르다면 ... 누군가는 안쏴야하는거 아닌가?
-	// -> CTimeMgr 가 같은 시간을 보장한다!
-	dCurSec = CTimeMgr::GetInst()->GetdAcc();
-
-	Vec2 vMisslePos = vCurPos;
-	vMisslePos.y += GetScale().y / 2.f;
-
-	//if (dCurSec < dPrevSec)
-	//{
-	//	CMissile* pMissile = new CMissile;
-	//	pMissile->SetPos(vMisslePos);
-	//	pMissile->SetDir(Vec2(0.f, 1.f));
-	//	pMissile->SetScale(Vec2(GetScale().x / 2.f, GetScale().y / 2.f));
-	//	CScene* pCurScene = CSceneMgr::GetInst()->GetCurScene();
-	//	pCurScene->AddObject(pMissile, GROUP_TYPE::MONSTER);
-	//}
-
 	SetPos(vCurPos);
+
+	if (m_bAttackAble)
+		Attack();
+	else
+	{
+		double curTime = CTimeMgr::GetInst()->GetCurTime();
+		if (curTime - m_dLastTime > 4.)
+		{
+			m_dLastTime = curTime;
+			m_bAttackAble = false;
+		}
+	}
 }
 
 void CMonster::render(HDC _dc)

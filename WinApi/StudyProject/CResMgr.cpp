@@ -17,6 +17,9 @@ CResMgr::~CResMgr()
 	{
 		delete iter->second;
 	}
+
+	// Error ...
+	//Safe_Delete_Map(m_mapTex);
 }
 
 

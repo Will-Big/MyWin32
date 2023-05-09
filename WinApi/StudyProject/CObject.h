@@ -3,6 +3,7 @@
 // 순수 가상함수를 만들어서 추상 클래스화 해준다.
 
 class CCollider;
+class CAnimator;
 
 class CObject
 {
@@ -13,6 +14,7 @@ private:
 	Vec2		m_vScale;
 
 	CCollider*	m_pCollider;
+	CAnimator*	m_pAnimator;
 
 	bool		m_bAlive;
 

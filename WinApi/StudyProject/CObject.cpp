@@ -10,6 +10,7 @@ CObject::CObject()
 	: m_vPos{}
 	, m_vScale{}
 	, m_pCollider(nullptr)
+	, m_pAnimator(nullptr)
 	, m_bAlive(true)
 {
 }
@@ -19,10 +20,14 @@ CObject::CObject(const CObject& _origin)
 	, m_vPos(_origin.m_vPos)
 	, m_vScale(_origin.m_vScale)
 	, m_pCollider(nullptr)
+	, m_pAnimator(nullptr)
 	, m_bAlive(true)
 {
-	m_pCollider = new CCollider(*_origin.m_pCollider);
-	m_pCollider->m_pOwner = this;
+	if(_origin.m_pCollider)
+	{
+		m_pCollider = new CCollider(*_origin.m_pCollider);
+		m_pCollider->m_pOwner = this;
+	}
 }
 
 CObject::~CObject()
