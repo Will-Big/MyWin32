@@ -139,6 +139,7 @@
     <ResourceCompile Include="AssignProject.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Output\bin\content\texture\FireBall.bmp" />
     <Image Include="AssignProject.ico" />
     <Image Include="small.ico" />
   </ItemGroup>

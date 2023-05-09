@@ -119,19 +119,6 @@ void CMissile::render(HDC _dc)
 	HDC hdcTex = m_pTex->GetDC();
 
    	BOOL boo = PlgBlt(_dc, m_pRotate, hdcTex, 0, 0, iWidth, iHeight, 0, 0, 0);
+
 	component_render(_dc);
-	
-	//StretchBlt(_dc
-	//	, vPos.x - (float)(vScale.x / 2)
-	//	, vPos.y - (float)(vScale.y / 2)
-	//	, vScale.x
-	//	, vScale.y
-	//	, m_pTex->GetDC()
-	//	, 0, 0, iWidth, iHeight
-	//	, SRCCOPY);
-
-	//HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 255));
-	//FillRect(m_pTex->GetDC(), )
-
-
 }

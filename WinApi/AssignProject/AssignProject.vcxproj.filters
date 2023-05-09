@@ -45,5 +45,8 @@
     <Image Include="AssignProject.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="..\Output\bin\content\texture\FireBall.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>

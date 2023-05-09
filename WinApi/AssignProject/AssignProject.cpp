@@ -92,12 +92,17 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        이 함수를 통해 인스턴스 핸들을 전역 변수에 저장하고
 //        주 프로그램 창을 만든 다음 표시합니다.
 //
+HDC hdc;
+int nextPos = 0;
+
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+
+   hdc = GetDC(hWnd);
 
    if (!hWnd)
    {
@@ -178,8 +183,18 @@ void PointGrid(HWND hWnd, LPARAM lParam)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    //HDC hdc = BeginPaint(hWnd, &ps);
+    
+    HDC MemDC = 0;
+    HBITMAP MyBitmap = 0, OldBitmap = 0;
+
+    
+
+
     switch (message)
     {
     case WM_COMMAND:
@@ -203,16 +218,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
-            DrawGrid(hWnd, hdc);
+            MemDC = CreateCompatibleDC(hdc);
+            MyBitmap = LoadBitmap(hInst, MAKEINTRESOURCE(IDB_BITMAP1));
+            OldBitmap = (HBITMAP)SelectObject(MemDC, MyBitmap);
+
+            BitBlt(hdc, nextPos, nextPos, 256, 256, MemDC, 0, 0, SRCCOPY);
+            nextPos++;
+            SelectObject(MemDC, OldBitmap);
+
+            DeleteObject(MyBitmap);
+            DeleteDC(MemDC);
             EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
-    case WM_LBUTTONDOWN:
-        PointGrid(hWnd, lParam);
-        InvalidateRect(hWnd, nullptr, false);
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }

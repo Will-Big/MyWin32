@@ -11,6 +11,7 @@ CTimeMgr::CTimeMgr()
 	, m_dAcc(0.)
 	, m_iCallCount(0)
 	, m_iFPS(0)
+	, m_iTimerID(0)
 {
 
 }
@@ -39,7 +40,6 @@ void CTimeMgr::update()
 	// 이전 카운트 값을 현재 값으로 갱신(다음번의 계산을 위해서)
 	m_llPrevCount = m_llCurCount;
 
-
 #ifdef _DEBUG
 	// 디버그 모드라면 자동으로 전처리기가 활성화됨
 	// 디버그 모드 중 정지했을 때 다음 프레임까지의 시간을 60분의 1초로 보장해줌
@@ -64,3 +64,8 @@ void CTimeMgr::render()
 		SetWindowText(CCore::GetInst()->GetMainHwnd(), szBuffer);
 	}
 }
+
+//LARGE_INTEGER CTimeMgr::GetCurTime()
+//{
+//	return LARGE_INTEGER();
+//}
