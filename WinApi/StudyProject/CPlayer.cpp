@@ -13,16 +13,21 @@
 #include "CTexture.h"
 
 #include "CCollider.h"
+#include "CAnimator.h"
 
 CPlayer::CPlayer()
 	: m_pTex(nullptr)
 {
 	// Texture 로딩하기
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Mario.bmp");
+	// m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Mario.bmp");
 	
 	CreateCollider();
 	GetCollider()->SetOffsetPos(Vec2(0.f, 10.f));
 	GetCollider()->SetScale(Vec2(35.f, 80.f));
+
+	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\link.bmp");
+	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"WALK_DOWN", m_pTex, Vec2(0.f, 520.f), Vec2(120.f, 130.f), Vec2(120.f, 0.f), 1.f, 10);
 }
 
 CPlayer::~CPlayer()

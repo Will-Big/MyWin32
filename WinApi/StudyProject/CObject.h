@@ -31,6 +31,9 @@ public:
 	void CreateCollider();
 	CCollider* GetCollider() { return m_pCollider; }
 
+	void CreateAnimator();
+	CAnimator* GetAnimator() { return m_pAnimator; }
+
 	bool IsDead() { return !m_bAlive; }
 
 	virtual void OnCollision(CCollider* _pOther);
