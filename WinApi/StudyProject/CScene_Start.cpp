@@ -17,6 +17,8 @@
 
 #include "CSceneMgr.h"
 
+#include "CCollider.h"
+
 
 CScene_Start::CScene_Start()
 {
@@ -42,7 +44,9 @@ void CScene_Start::Enter()
 	// Object 추가
 	CObject* pObj = new CPlayer;
 	pObj->SetPos(Vec2(640.f, 384.f));
-	pObj->SetScale(Vec2(100.f, 100.f));
+	pObj->SetScale(Vec2(50.f, 50.f));
+	pObj->GetCollider()->SetScale(pObj->GetScale());
+	//pObj->GetCollider()->SetOffsetPos(pObj->GetScale());
  	AddObject(pObj, GROUP_TYPE::PLAYER);
 
 	// CLONE 테스트

@@ -16,18 +16,19 @@
 #include "CAnimator.h"
 
 CPlayer::CPlayer()
-	: m_pTex(nullptr)
 {
 	// Texture 로딩하기
 	// m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Mario.bmp");
 	
 	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 10.f));
+	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
 	GetCollider()->SetScale(Vec2(35.f, 80.f));
 
-	m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\link.bmp");
+	CTexture* pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\link.bmp");
 	CreateAnimator();
-	GetAnimator()->CreateAnimation(L"WALK_DOWN", m_pTex, Vec2(0.f, 520.f), Vec2(120.f, 130.f), Vec2(120.f, 0.f), 1.f, 10);
+	GetAnimator()->CreateAnimation(L"WALK_DOWN", pTex, Vec2(0.f, 520.f), Vec2(120.f, 130.f), Vec2(120.f, 0.f), 0.05f, 10);
+
+	GetAnimator()->Play(L"WALK_DOWN", true);
 }
 
 CPlayer::~CPlayer()
@@ -61,6 +62,7 @@ void CPlayer::update()
 	}
 
 	SetPos(vPos);
+	GetAnimator()->update();
 }
 
 void CPlayer::CreateMissile()
@@ -81,23 +83,7 @@ void CPlayer::CreateMissile()
 
 void CPlayer::render(HDC _dc)
 {
-	// 23, 13:45 강사는 구석에 렌더하는 경우가 있어서 int로 받는다고 했는데..
-	// UINT 를 int로 캐스팅하면 정상적으로 되나?
-	// 굳이 int 로 받아야 하나?
-	int iWidth = (int)m_pTex->Width();
-	int iHeight = (int)m_pTex->Height();
 
-	Vec2 vPos = GetPos();
-	Vec2 vScale = GetScale();
-
-	// 투명화
-	TransparentBlt(_dc
-		, (int)(vPos.x - (float)(vScale.x / 2))
-		, (int)(vPos.y - (float)(vScale.y / 2))
-		, (int)vScale.x, (int)vScale.y
-		, m_pTex->GetDC()
-		, 0, 0, iWidth, iHeight
-		, RGB(255, 0, 255));
-
+	
 	component_render(_dc);
 }
