@@ -44,8 +44,9 @@ void CScene_Start::Enter()
 	// Object Ãß°¡
 	CObject* pObj = new CPlayer;
 	pObj->SetPos(Vec2(640.f, 384.f));
-	pObj->SetScale(Vec2(50.f, 50.f));
-	pObj->GetCollider()->SetScale(pObj->GetScale());
+	pObj->SetScale(Vec2(60.f, 65.f));
+	pObj->GetCollider()->SetScale(Vec2(0.f, 12.f));
+	pObj->GetCollider()->SetScale(Vec2(30.f, 32.5f));
 	//pObj->GetCollider()->SetOffsetPos(pObj->GetScale());
  	AddObject(pObj, GROUP_TYPE::PLAYER);
 

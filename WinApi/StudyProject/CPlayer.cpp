@@ -14,6 +14,7 @@
 
 #include "CCollider.h"
 #include "CAnimator.h"
+#include "CAnimation.h"
 
 CPlayer::CPlayer()
 {
@@ -21,14 +22,20 @@ CPlayer::CPlayer()
 	// m_pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\Mario.bmp");
 	
 	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
-	GetCollider()->SetScale(Vec2(35.f, 80.f));
+	//GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+	//GetCollider()->SetScale(Vec2(35.f, 80.f));
 
 	CTexture* pTex = CResMgr::GetInst()->LoadTexture(L"PlayerTex", L"texture\\link.bmp");
 	CreateAnimator();
 	GetAnimator()->CreateAnimation(L"WALK_DOWN", pTex, Vec2(0.f, 520.f), Vec2(120.f, 130.f), Vec2(120.f, 0.f), 0.05f, 10);
-
 	GetAnimator()->Play(L"WALK_DOWN", true);
+
+	CAnimation* pAnim = GetAnimator()->FindAnimation(L"WALK_DOWN");
+	for (int i = 0; i < pAnim->GetMaxFrame(); ++i)
+	{
+		pAnim->GetFrame(i).vOffset = Vec2(0.f, -20.f);
+	}
+	
 }
 
 CPlayer::~CPlayer()
