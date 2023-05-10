@@ -23,8 +23,5 @@ public:
 	double GetCurTime() { return (double)m_llCurCount.QuadPart / (double)m_llFrequency.QuadPart; }
 	double GetDT() { return m_dDT; }
 	float GetfDT() { return (float)m_dDT; }
-
-	// 내 맘대로 함수
-	double GetdAcc() { return m_dAcc; } // 1초 근방을 얻기 위한 함수
 };
 

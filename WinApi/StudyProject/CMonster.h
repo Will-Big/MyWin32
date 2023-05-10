@@ -18,7 +18,8 @@ private:
     // ³» ¸¾´ë·Î
     int         m_iHp = 5;
     bool        m_bAttackAble;
-    double      m_dLastTime;
+    double      m_dLastAttack;
+    double      m_dAttackCooldown;
     
 
 public:

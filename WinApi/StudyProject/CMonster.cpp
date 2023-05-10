@@ -17,7 +17,8 @@ CMonster::CMonster()
 	, m_fMaxDistance(50.f)
 	, m_iDir(1)
 	, m_bAttackAble(false)
-	, m_dLastTime(0)
+	, m_dLastAttack(0)
+	, m_dAttackCooldown(1.0)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"Monster", L"texture\\Goomba.bmp");
 	CreateCollider();
@@ -90,11 +91,12 @@ void CMonster::update()
 		Attack();
 	else
 	{
-		double curTime = CTimeMgr::GetInst()->GetCurTime();
-		if (curTime - m_dLastTime > 4.)
+		m_dLastAttack += fDT;
+
+		if (m_dLastAttack > m_dAttackCooldown)
 		{
-			m_dLastTime = curTime;
-			m_bAttackAble = false;
+			m_dLastAttack -= m_dAttackCooldown;
+			m_bAttackAble = true;
 		}
 	}
 }
