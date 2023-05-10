@@ -86,6 +86,12 @@
     <Filter Include="Engine\07.Component\Animator\Animation">
       <UniqueIdentifier>{219c57ba-7766-4e9d-acd8-58884c9ce894}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\Monster\MyMonster">
+      <UniqueIdentifier>{73415c47-3173-4762-95a2-9c84773d1533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Monster\MyMonster\MyMonsterCreator">
+      <UniqueIdentifier>{c6821919-469c-4e70-8948-5cce72ae20db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -178,6 +184,12 @@
     <ClInclude Include="CAnimation.h">
       <Filter>Engine\07.Component\Animator\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="MyMonster.h">
+      <Filter>Engine\04.Object\Monster\MyMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMonsterCreator.h">
+      <Filter>Engine\04.Object\Monster\MyMonster\MyMonsterCreator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -249,6 +261,12 @@
     </ClCompile>
     <ClCompile Include="CAnimation.cpp">
       <Filter>Engine\07.Component\Animator\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMonster.cpp">
+      <Filter>Engine\04.Object\Monster\MyMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMonsterCreator.cpp">
+      <Filter>Engine\04.Object\Monster\MyMonster\MyMonsterCreator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
