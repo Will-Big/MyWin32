@@ -95,6 +95,12 @@
     <Filter Include="Engine\04.Object\MyObject\MySkill">
       <UniqueIdentifier>{277e9863-672e-4ac6-bfe7-053ae81766d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03.Manager\RenderMgr">
+      <UniqueIdentifier>{2aad7c3e-261c-441a-8df1-d30763b6f091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03.Manager\Camera">
+      <UniqueIdentifier>{4505aee6-65e0-40bd-aed0-b29ef1910ae2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -196,6 +202,15 @@
     <ClInclude Include="MySkill.h">
       <Filter>Engine\04.Object\MyObject\MySkill</Filter>
     </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Engine\01.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderMgr.h">
+      <Filter>Engine\03.Manager\RenderMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CCamera.h">
+      <Filter>Engine\03.Manager\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -276,6 +291,12 @@
     </ClCompile>
     <ClCompile Include="MySkill.cpp">
       <Filter>Engine\04.Object\MyObject\MySkill</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderMgr.cpp">
+      <Filter>Engine\03.Manager\RenderMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CCamera.cpp">
+      <Filter>Engine\03.Manager\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

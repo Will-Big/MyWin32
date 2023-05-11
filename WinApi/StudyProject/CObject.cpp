@@ -87,6 +87,8 @@ void CObject::finalupdate()
 
 void CObject::render(HDC _dc)
 {
+	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vPos);
+
 	component_render(_dc);
 }
 

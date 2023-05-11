@@ -8,6 +8,7 @@
 #include "CPathMgr.h"
 #include "CCollisionMgr.h"
 #include "CEventMgr.h"
+#include "RenderMgr.h"
 
 CCore::CCore()
 	: m_hWnd(0)
@@ -64,7 +65,6 @@ int CCore::init(HWND _hWnd, POINT _ptResolution)
 	CKeyMgr::GetInst()->init();
 	CPathMgr::GetInst()->init();
 	CSceneMgr::GetInst()->init();
-	
 
 
 	return S_OK;

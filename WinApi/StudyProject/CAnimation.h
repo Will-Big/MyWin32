@@ -36,7 +36,7 @@ public:
 	}
 
 	tAnimFrm& GetFrame(int _idx) { return m_vecFrm[_idx]; } // 받아 간 쪽에서 수정할 수 있도록 레퍼런스로
-	int GetMaxFrame() { return m_vecFrm.size(); }
+	int GetMaxFrame() { return (int)m_vecFrm.size(); }
 
 public:
 	void update();
