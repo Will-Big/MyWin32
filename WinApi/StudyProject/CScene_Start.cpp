@@ -51,6 +51,7 @@ void CScene_Start::Enter()
 	pObj->GetCollider()->SetScale(Vec2(30.f, 32.5f));
 	//pObj->GetCollider()->SetOffsetPos(pObj->GetScale());
  	AddObject(pObj, GROUP_TYPE::PLAYER);
+	CCamera::GetInst()->SetTarget(pObj);
 
 	// CLONE Å×½ºÆ®
 	//CObject* pOtherPlayer = pObj->Clone();

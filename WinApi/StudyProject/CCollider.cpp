@@ -6,6 +6,8 @@
 
 #include "SelectGDI.h"
 
+#include "CCamera.h"
+
 // 클래스 멤버 변수의 초기화에는 앞에 타입을 적어줘야한다.
 // 전역에서 초기화 해줘야 하며 cpp 파일에서 해야 재정의 에러가 발생하지 않는다
 UINT CCollider::g_iNextID = 0;
@@ -53,11 +55,13 @@ void CCollider::render(HDC _dc)
 	SelectGDI p(_dc, ePen);
 	SelectGDI b(_dc, BRUSH_TYPE::HOLLOW);
 
+	Vec2 vRenderPos = CCamera::GetInst()->GetRenderPos(m_vFinalPos);
+
 	Rectangle(_dc
-		, (int)(m_vFinalPos.x - m_vScale.x / 2.f)
-		, (int)(m_vFinalPos.y - m_vScale.y / 2.f)
-		, (int)(m_vFinalPos.x + m_vScale.x / 2.f)
-		, (int)(m_vFinalPos.y + m_vScale.y / 2.f));
+		, (int)(vRenderPos.x - m_vScale.x / 2.f)
+		, (int)(vRenderPos.y - m_vScale.y / 2.f)
+		, (int)(vRenderPos.x + m_vScale.x / 2.f)
+		, (int)(vRenderPos.y + m_vScale.y / 2.f));
 }
 
 void CCollider::OnCollision(CCollider* _pOther)

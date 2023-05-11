@@ -10,6 +10,7 @@
 #include "CTexture.h"
 
 #include "CCollider.h"
+#include "CAnimator.h"
 
 CMonster::CMonster()
 	: m_vCenterPos(Vec2(0.f, 0.f))
@@ -21,6 +22,9 @@ CMonster::CMonster()
 	, m_dAttackCooldown(1.0)
 {
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"Monster", L"texture\\Goomba.bmp");
+	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"Goomba", m_pTex, Vec2(0, 0), Vec2(256, 256), Vec2(256, 256), 1.f, 1);
+	GetAnimator()->Play(L"Goomba", true);
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(50.f, 50.f));
 }
@@ -103,29 +107,29 @@ void CMonster::update()
 
 void CMonster::render(HDC _dc)
 {
-	int iWidth = (int)m_pTex->Width();
-	int iHeight = (int)m_pTex->Height();
+	//int iWidth = (int)m_pTex->Width();
+	//int iHeight = (int)m_pTex->Height();
 
-	Vec2 vPos = GetPos();
-	Vec2 vScale = GetScale();
+	//Vec2 vPos = GetPos();
+	//Vec2 vScale = GetScale();
 
-	// 투명화
+	//// 투명화
+	////TransparentBlt(_dc
+	////	, vPos.x - (float)(iWidth / 2)
+	////	, vPos.y - (float)(iHeight / 2)
+	////	, iWidth, iHeight
+	////	, m_pTex->GetDC()
+	////	, 0, 0, iWidth, iHeight
+	////	, RGB(255, 0, 255));
+
 	//TransparentBlt(_dc
-	//	, vPos.x - (float)(iWidth / 2)
-	//	, vPos.y - (float)(iHeight / 2)
-	//	, iWidth, iHeight
+	//	, (int)(vPos.x - (float)(vScale.x / 2))
+	//	, (int)(vPos.y - (float)(vScale.y / 2))
+	//	, (int)vScale.x
+	//	, (int)vScale.y
 	//	, m_pTex->GetDC()
 	//	, 0, 0, iWidth, iHeight
-	//	, RGB(255, 0, 255));
-
-	TransparentBlt(_dc
-		, (int)(vPos.x - (float)(vScale.x / 2)) // 0 ~ 50
-		, (int)(vPos.y - (float)(vScale.y / 2)) // 25 ~ 25
-		, (int)vScale.x // 50
-		, (int)vScale.y // 50
-		, m_pTex->GetDC()
-		, 0, 0, iWidth, iHeight
-		, RGB(255, 255, 255));
+	//	, RGB(255, 255, 255));
 
 	component_render(_dc);
 }

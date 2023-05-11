@@ -11,6 +11,7 @@
 #include "CCore.h"
 
 #include "CCollider.h"
+#include "CAnimator.h"
 
 
 CMissile::CMissile()
@@ -24,8 +25,11 @@ CMissile::CMissile()
 	m_pTex = CResMgr::GetInst()->LoadTexture(L"Missile", L"texture//FireBall.bmp");
 	//m_pTex->MakeTransparent();
 	CreateCollider();
-	GetCollider()->SetOffsetPos(Vec2(12.5f, 12.5f));
-	GetCollider()->SetScale(Vec2(25.f, 25.f));
+	GetCollider()->SetOffsetPos(Vec2(0.f, 0.f));
+	GetCollider()->SetScale(Vec2(50.f, 50.f));
+	CreateAnimator();
+	GetAnimator()->CreateAnimation(L"Missile", m_pTex, Vec2(0, 0), Vec2(256, 256), Vec2(256, 256), 1.f, 1);
+	GetAnimator()->Play(L"Missile", true);
 }
 
 CMissile::~CMissile()
@@ -111,14 +115,14 @@ void CMissile::update()
 
 void CMissile::render(HDC _dc)
 {
-	Vec2 vPos = GetPos();
-	Vec2 vScale = GetScale();
-	int iWidth = (int)m_pTex->Width();
-	int iHeight = (int)m_pTex->Height();
+	//Vec2 vPos = GetPos();
+	//Vec2 vScale = GetScale();
+	//int iWidth = (int)m_pTex->Width();
+	//int iHeight = (int)m_pTex->Height();
 
-	HDC hdcTex = m_pTex->GetDC();
+	//HDC hdcTex = m_pTex->GetDC();
 
-   	BOOL boo = PlgBlt(_dc, m_pRotate, hdcTex, 0, 0, iWidth, iHeight, 0, 0, 0);
+	//BOOL boo = PlgBlt(_dc, m_pRotate, hdcTex, 0, 0, iWidth, iHeight, 0, 0, 0);
 	component_render(_dc);
 	
 	//StretchBlt(_dc

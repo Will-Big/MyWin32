@@ -101,6 +101,9 @@
     <Filter Include="Engine\03.Manager\Camera">
       <UniqueIdentifier>{4505aee6-65e0-40bd-aed0-b29ef1910ae2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\Monster">
+      <UniqueIdentifier>{011c1713-882e-452e-8f2c-46b66bc7b327}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -147,9 +150,6 @@
     </ClInclude>
     <ClInclude Include="CPlayer.h">
       <Filter>Engine\04.Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="CMonster.h">
-      <Filter>Engine\04.Object\MyObject</Filter>
     </ClInclude>
     <ClInclude Include="CMissile.h">
       <Filter>Engine\04.Object\Missile</Filter>
@@ -211,6 +211,9 @@
     <ClInclude Include="CCamera.h">
       <Filter>Engine\03.Manager\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="CMonster.h">
+      <Filter>Engine\04.Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -237,9 +240,6 @@
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
       <Filter>Engine\04.Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonster.cpp">
-      <Filter>Engine\04.Object\MyObject</Filter>
     </ClCompile>
     <ClCompile Include="CMissile.cpp">
       <Filter>Engine\04.Object\Missile</Filter>
@@ -297,6 +297,9 @@
     </ClCompile>
     <ClCompile Include="CCamera.cpp">
       <Filter>Engine\03.Manager\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonster.cpp">
+      <Filter>Engine\04.Object\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

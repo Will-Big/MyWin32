@@ -7,6 +7,7 @@ class CCamera
 	SINGLE(CCamera)
 private:
 	Vec2		m_vLookAt;		// 카메라가 보는 위치
+	Vec2		m_vPrevLootAt;	// 카메라가 보는 이전 프레임 위치
 	CObject*	m_pTargetObj;	// 카메라 타겟 오브젝트
 
 	Vec2		m_vDiff;		// 해상도 중심위치와, 카메라 LookAt 간의 차이 값
