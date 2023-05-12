@@ -104,6 +104,12 @@
     <Filter Include="Engine\04.Object\Monster">
       <UniqueIdentifier>{011c1713-882e-452e-8f2c-46b66bc7b327}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04.Object\Player\PlayerState">
+      <UniqueIdentifier>{4f6f821f-12c8-470b-849f-5e63aa423c6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\04.Object\Player\PlayerState\IdleFront">
+      <UniqueIdentifier>{ecd6313e-3a1b-460a-82c3-4a138cf62a84}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCore.h">
@@ -214,6 +220,12 @@
     <ClInclude Include="CMonster.h">
       <Filter>Engine\04.Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Engine\04.Object\Player\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleFront.h">
+      <Filter>Engine\04.Object\Player\PlayerState\IdleFront</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCore.cpp">
@@ -300,6 +312,12 @@
     </ClCompile>
     <ClCompile Include="CMonster.cpp">
       <Filter>Engine\04.Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Engine\04.Object\Player\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleFront.cpp">
+      <Filter>Engine\04.Object\Player\PlayerState\IdleFront</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
